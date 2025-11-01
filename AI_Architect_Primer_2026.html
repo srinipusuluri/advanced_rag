@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Architect Primer 2026 - Complete Self-Learning Guide</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #f0f8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.4em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .learning-path {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .path-step {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            gap: 5px;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 15px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 140px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .tab-button:hover::before {
+            left: 100%;
+        }
+
+        .tab-button:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .tab-button.active {
+            background: rgba(255,255,255,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+
+        .tab-content {
+            display: none;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section-icon {
+            font-size: 2em;
+            color: #667eea;
+        }
+
+        .section-title {
+            font-size: 2.2em;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .content-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .content-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card h3 i {
+            color: #764ba2;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .resource-links {
+            margin-top: 20px;
+        }
+
+        .resource-links h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .resource-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .resource-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            color: #667eea;
+        }
+
+        .resource-link i {
+            font-size: 1.2em;
+            color: #667eea;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-example::before {
+            content: 'Python';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .progress-tracker {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 6px;
+            border-radius: 3px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        .pdf-reference {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            border: 2px solid #fdcb6e;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .pdf-reference i {
+            font-size: 2em;
+            color: #d63031;
+        }
+
+        .pdf-reference strong {
+            color: #2d3436;
+        }
+
+        .company-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .company-logo {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-weight: bold;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        .company-logo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .learning-objective {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .learning-objective h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .certification-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 10px 10px 10px 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                margin: 2px;
+                min-width: auto;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+
+            .company-logos {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-action:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8em;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 AI Architect Primer 2026</h1>
+            <p class="subtitle">Complete Self-Learning Guide to Becoming an AI Architect</p>
+            <div class="learning-path">
+                <div class="path-step">📚 Learn Fundamentals</div>
+                <div class="path-step">🛠️ Master Technologies</div>
+                <div class="path-step">🏗️ Design Architectures</div>
+                <div class="path-step">💼 Get Certified</div>
+                <div class="path-step">🎯 Land Your Dream Role</div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'introduction')">
+                <i class="fas fa-rocket"></i> Introduction
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'fundamentals')">
+                <i class="fas fa-brain"></i> AI Fundamentals
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'architecture')">
+                <i class="fas fa-sitemap"></i> Architecture Patterns
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'technologies')">
+                <i class="fas fa-tools"></i> Core Technologies
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'advanced')">
+                <i class="fas fa-microchip"></i> Advanced Topics
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'tools')">
+                <i class="fas fa-code"></i> Tools & Frameworks
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'certification')">
+                <i class="fas fa-certificate"></i> Certification
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'career')">
+                <i class="fas fa-briefcase"></i> Career Path
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'practice')">
+                <i class="fas fa-flask"></i> Practice Labs
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'resources')">
+                <i class="fas fa-book"></i> Resources
+            </button>
+        </div>
+
+        <div id="introduction" class="tab-content active">
+            <div class="progress-tracker">
+                <div class="progress-fill" style="width: 10%"></div>
+            </div>
+
+            <div class="section-header">
+                <i class="fas fa-rocket section-icon"></i>
+                <h2 class="section-title">Welcome to AI Architecture 2026</h2>
+            </div>
+
+            <div class="learning-objective">
+                <h4>🎯 Learning Objectives</h4>
+                <p>By the end of this primer, you'll understand the complete AI Architect role, master essential technologies, design scalable architectures, and be prepared for certification and career advancement.</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3><i class="fas fa-user-tie"></i> What is an AI Architect?</h3>
+                    <p>An AI Architect is a senior technical leader who designs, implements, and governs artificial intelligence solutions at an enterprise level. They bridge cutting-edge AI research with practical business applications, ensuring AI initiatives deliver value while maintaining security, scalability, and ethical standards.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Strategic Leadership</span>
+                        <span class="skill-tag">Technical Excellence</span>
+                        <span class="skill-tag">Business Acumen</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-chart-line"></i> Why AI Architecture Matters in 2026</h3>
+                    <p>AI is transforming every industry. Architects ensure AI systems are reliable, scalable, ethical, and aligned with business objectives. The role combines deep technical expertise with strategic vision to shape the future of intelligent systems.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Future-Focused</span>
+                        <span class="skill-tag">High Impact</span>
+                        <span class="skill-tag">Innovation Driver</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-building"></i> Enterprise AI Challenges</h3>
+                    <p>Modern AI Architects tackle complex challenges: scaling AI from prototype to production, ensuring model reliability, managing computational costs, maintaining data privacy, and integrating AI with existing enterprise systems.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Scalability</span>
+                        <span class="skill-tag">Reliability</span>
+                        <span class="skill-tag">Security</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pdf-reference">
+                <i class="fas fa-file-pdf"></i>
+                <div>
+                    <strong>📖 Reference Materials</strong><br>
+                    This primer is based on comprehensive industry research including the <em>AI_Architect_2026.pdf</em> and <em>Arcitura AI Architect Training Guide</em> available in the docs folder.
+                </div>
+            </div>
+
+            <div class="company-logos">
+                <div class="company-logo">🏢 NVIDIA</div>
+                <div class="company-logo">📱 Adobe</div>
+                <div class="company-logo">☁️ AWS</div>
+                <div class="company-logo">🔍 Google</div>
+                <div class="company-logo">🤖 OpenAI</div>
+                <div class="company-logo">💡 Microsoft</div>
+                <div class="company-logo">🚀 Tesla</div>
+                <div class="company-logo">🏦 Capital One</div>
+            </div>
+        </div>
+
+        <div id="fundamentals" class="tab-content">
+            <div class="progress-tracker">
+                <div class="progress-fill" style="width: 20%"></div>
+            </div>
+
+            <div class="section-header">
+                <i class="fas fa-brain section-icon"></i>
+                <h2 class="section-title">AI Fundamentals</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3><i class="fas fa-cogs"></i> Machine Learning Basics</h3>
+                    <p>Machine Learning enables systems to learn from data without explicit programming. Key concepts include supervised learning (prediction with labeled data), unsupervised learning (pattern discovery), and reinforcement learning (decision optimization).</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Supervised Learning</span>
+                        <span class="skill-tag">Unsupervised Learning</span>
+                        <span class="skill-tag">Reinforcement Learning</span>
+                    </div>
+                    <div class="resource-links">
+                        <h4>📚 Learn More</h4>
+                        <div class="resource-grid">
+                            <a href="https://developers.google.com/machine-learning/crash-course" class="resource-link" target="_blank">
+                                <i class="fab fa-google"></i> Google ML Crash Course
+                            </a>
+                            <a href="https://www.coursera.org/learn/machine-learning" class="resource-link" target="_blank">
+                                <i class="fas fa-graduation-cap"></i> Coursera ML Course
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-robot"></i> Deep Learning & Neural Networks</h3>
+                    <p>Deep Learning uses multi-layered neural networks to model complex patterns. Key architectures include Convolutional Neural Networks (CNNs) for images, Recurrent Neural Networks (RNNs) for sequences, and Transformers for attention-based processing.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Neural Networks</span>
+                        <span class="skill-tag">CNNs</span>
+                        <span class="skill-tag">Transformers</span>
+                    </div>
+                    <div class="resource-links">
+                        <h4>📚 Learn More</h4>
+                        <div class="resource-grid">
+                            <a href="https://www.deeplearning.ai/" class="resource-link" target="_blank">
+                                <i class="fas fa-brain"></i> DeepLearning.AI
+                            </a>
+                            <a href="https://pytorch.org/tutorials/" class="resource-link" target="_blank">
+                                <i class="fas fa-code"></i> PyTorch Tutorials
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-magic"></i> Generative AI</h3>
+                    <p>Generative AI creates new content using models like GANs (Generative Adversarial Networks), VAEs (Variational Autoencoders), and large language models. Applications include text generation, image synthesis, and creative content production.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">GANs</span>
+                        <span class="skill-tag">LLMs</span>
+                        <span class="skill-tag">Diffusion Models</span>
+                    </div>
+                    <div class="resource-links">
+                        <h4>📚 Learn More</h4>
+                        <div class="resource-grid">
+                            <a href="https://huggingface.co/learn" class="resource-link" target="_blank">
+                                <i class="fas fa-hugging-face"></i> Hugging Face Course
+                            </a>
+                            <a href="https://platform.openai.com/docs/introduction" class="resource-link" target="_blank">
+                                <i class="fas fa-robot"></i> OpenAI Documentation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-example">
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+# Example: Simple ML workflow
+def ml_pipeline(X, y):
+    # Split data
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+    # Train model
+    model = LogisticRegression()
+    model.fit(X_train, y_train)
+
+    # Evaluate
+    accuracy = model.score(X_test, y_test)
+    return model, accuracy
+
+# Usage
+X = np.random.randn(1000, 10)  # Features
+y = np.random.randint(0, 2, 1000)  # Binary labels
+model, acc = ml_pipeline(X, y)
+print(f"Model accuracy: {acc:.3f}")
+            </div>
+        </div>
+
+        <div id="architecture" class="tab-content">
+            <div class="progress-tracker">
+                <div class="progress-fill" style="width: 35%"></div>
+            </div>
+
+            <div class="section-header">
+                <i class="fas fa-sitemap section-icon"></i>
+                <h2 class="section-title">AI Architecture Patterns</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3><i class="fas fa-layer-group"></i> System Architecture Types</h3>
+                    <p>AI systems can be monolithic (single unit), modular (components), or hybrid. Architects choose based on scalability needs, development velocity, and maintenance complexity. Modern AI favors modular architectures for flexibility.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Monolithic</span>
+                        <span class="skill-tag">Modular</span>
+                        <span class="skill-tag">Microservices</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-database"></i> Data Architecture</h3>
+                    <p>AI systems require robust data pipelines. Internal storage for training data, external APIs for real-time data, and hybrid approaches for enterprise integration. Data versioning and lineage tracking are critical for reproducibility.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Data Pipelines</span>
+                        <span class="skill-tag">Versioning</span>
+                        <span class="skill-tag">Lineage</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-cogs"></i> Core AI Modules</h3>
+                    <p>Essential components include data ingestion, preprocessing, feature engineering, inference engines, and model repositories. Each module must be designed for scalability, monitoring, and fault tolerance.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Data Ingestion</span>
+                        <span class="skill-tag">Feature Engineering</span>
+                        <span class="skill-tag">Model Serving</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-eye"></i> Monitoring & Observability</h3>
+                    <p>AI systems require comprehensive monitoring: performance metrics, data drift detection, model accuracy tracking, and operational health. Implement logging, alerting, and dashboards for proactive management.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Metrics</span>
+                        <span class="skill-tag">Logging</span>
+                        <span class="skill-tag">Alerting</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-links">
+                <h4>🏗️ Architecture Resources</h4>
+                <div class="resource-grid">
+                    <a href="https://aws.amazon.com/architecture/well-architected/" class="resource-link" target="_blank">
+                        <i class="fab fa-aws"></i> AWS Well-Architected Framework
+                    </a>
+                    <a href="https://cloud.google.com/architecture" class="resource-link" target="_blank">
+                        <i class="fab fa-google"></i> Google Cloud Architecture
+                    </a>
+                    <a href="https://learn.microsoft.com/en-us/azure/architecture/" class="resource-link" target="_blank">
+                        <i class="fab fa-microsoft"></i> Azure Architecture Center
+                    </a>
+                    <a href="https://microservices.io/" class="resource-link" target="_blank">
+                        <i class="fas fa-cubes"></i> Microservices Patterns
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="technologies" class="tab-content">
+            <div class="progress-tracker">
+                <div class="progress-fill" style="width: 50%"></div>
+            </div>
+
+            <div class="section-header">
+                <i class="fas fa-tools section-icon"></i>
+                <h2 class="section-title">Core Technologies</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3><i class="fab fa-python"></i> Python Ecosystem</h3>
+                    <p>Python is the de facto language for AI/ML. Essential libraries include NumPy (numerical computing), Pandas (data manipulation), Scikit-learn (ML algorithms), TensorFlow/PyTorch (deep learning), and FastAPI (web services).</p>
+                    <div class="resource-links">
+                        <h4>🔧 Key Libraries</h4>
+                        <div class="resource-grid">
+                            <a href="https://numpy.org/" class="resource-link" target="_blank">
+                                <img src="https://avatars.githubusercontent.com/u/288276?s=20" alt="NumPy" style="vertical-align: middle; margin-right: 5px;"> NumPy
+                            </a>
+                            <a href="https://pandas.pydata.org/" class="resource-link" target="_blank">
+                                <img src="https://avatars.githubusercontent.com/u/21206976?s=20" alt="Pandas" style="vertical-align: middle; margin-right: 5px;"> Pandas
+                            </a>
+                            <a href="https://scikit-learn.org/" class="resource-link" target="_blank">
+                                <img src="https://avatars.githubusercontent.com/u/365630?s=20" alt="Scikit-learn" style="vertical-align: middle; margin-right: 5px;"> Scikit-learn
+                            </a>
+                        </div>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">NumPy</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-cloud"></i> Cloud Platforms</h3>
+                    <p>Major cloud providers offer comprehensive AI/ML services: AWS SageMaker, Azure Machine Learning, Google Cloud Vertex AI. Each provides managed ML pipelines, AutoML, and specialized AI chips.</p>
+                    <div class="resource-links">
+                        <h4>☁️ Cloud AI Services</h4>
+                        <div class="resource-grid">
+                            <a href="https://aws.amazon.com/sagemaker/" class="resource-link" target="_blank">
+                                <i class="fab fa-aws" style="color: #ff9900;"></i> AWS SageMaker
+                            </a>
+                            <a href="https://azure.microsoft.com/en-us/products/machine-learning/" class="resource-link" target="_blank">
+                                <i class="fab fa-microsoft" style="color: #0078d4;"></i> Azure ML
+                            </a>
+                            <a href="https://cloud.google.com/vertex-ai" class="resource-link" target="_blank">
+                                <i class="fab fa-google" style="color: #4285f4;"></i> GCP Vertex AI
+                            </a>
+                        </div>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">GCP</span>
+                        <span class="skill-tag">SageMaker</span>
+                        <span class="skill-tag">Vertex AI</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-server"></i> MLOps & DevOps</h3>
+                    <p>MLOps extends DevOps to ML systems. Tools like MLflow (experiment tracking), DVC (data versioning), Kubeflow (ML pipelines), and Weights & Biases (monitoring) are essential for production AI.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">MLflow</span>
+                        <span class="skill-tag">Kubeflow</span>
+                        <span class="skill-tag">DVC</span>
+                        <span class="skill-tag">Weights & Biases</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-database"></i> Data Storage & Processing</h3>
+                    <p>Vector databases (Pinecone, Weaviate) for embeddings, data lakes (Delta Lake, Iceberg) for large datasets, and stream processing (Kafka, Spark Streaming) for real-time data. Choose based on data volume, velocity, and variety.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Vector DBs</span>
+                        <span class="skill-tag">Data Lakes</span>
+                        <span class="skill-tag">Streaming</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-links">
+                <h4>🛠️ Technology Resources</h4>
+                <div class="resource-grid">
+                    <a href="https://pytorch.org/" class="resource-link" target="_blank">
+                        <i class="fas fa-fire"></i> PyTorch Official
+                    </a>
+                    <a href="https://www.tensorflow.org/" class="resource-link" target="_blank">
+                        <i class="fas fa-brain"></i> TensorFlow
+                    </a>
+                    <a href="https://scikit-learn.org/" class="resource-link" target="_blank">
+                        <i class="fas fa-chart-line"></i> Scikit-learn
+                    </a>
+                    <a href="https://mlflow.org/" class="resource-link" target="_blank">
+                        <i class="fas fa-rocket"></i> MLflow
+                    </a>
+                    <a href="https://www.docker.com/" class="resource-link" target="_blank">
+                        <i class="fab fa-docker"></i> Docker
+                    </a>
+                    <a href="https://kubernetes.io/" class="resource-link" target="_blank">
+                        <i class="fas fa-cubes"></i> Kubernetes
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="advanced" class="tab-content">
+            <div class="progress-tracker">
+                <div class="progress-fill" style="width: 65%"></div>
+            </div>
+
+            <div class="section-header">
+                <i class="fas fa-microchip section-icon"></i>
+                <h2 class="section-title">Advanced Topics</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3><i class="fas fa-robot"></i> Large Language Models</h3>
+                    <p>LLMs like GPT-4, Claude, and open-source models (Llama, Mistral) are revolutionizing AI. Architects must understand fine-tuning, prompt engineering, RAG (Retrieval Augmented Generation), and model optimization techniques.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Fine-tuning</span>
+                        <span class="skill-tag">RAG</span>
+                        <span class="skill-tag">Prompt Engineering</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-users-cog"></i> Agentic AI</h3>
+                    <p>Autonomous AI agents can plan, reason, and execute tasks. Frameworks like LangChain, AutoGen, and CrewAI enable multi-agent systems. Architects design agent orchestration, tool integration, and safety mechanisms.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">LangChain</span>
+                        <span class="skill-tag">AutoGen</span>
+                        <span class="skill-tag">Multi-agent Systems</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-shield-alt"></i> Responsible AI</h3>
+                    <p>Ethical AI requires fairness assessment, bias mitigation, explainability, and privacy protection. Architects implement guardrails, audit trails, and governance frameworks to ensure AI systems are trustworthy and compliant.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Fairness</span>
+                        <span class="skill-tag">Explainability</span>
+                        <span class="skill-tag">Privacy</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-scale-balanced"></i> Scalability & Performance</h3>
+                    <p>Advanced techniques include distributed training, model compression, quantization, edge computing, and hardware acceleration (GPUs, TPUs). Architects optimize for latency, throughput, and cost-efficiency.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Distributed Training</span>
+                        <span class="skill-tag">Quantization</span>
+                        <span class="skill-tag">Edge Computing</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-links">
+                <h4>🔬 Advanced Resources</h4>
+                <div class="resource-grid">
+                    <a href="https://arxiv.org/" class="resource-link" target="_blank">
+                        <i class="fas fa-scroll"></i> arXiv Papers
+                    </a>
+                    <a href="https://huggingface.co/docs/transformers/index" class="resource-link" target="_blank">
+                        <i class="fas fa-hugging-face"></i> Transformers Docs
+                    </a>
+                    <a href="https://python.langchain.com/" class="resource-link" target="_blank">
+                        <i class="fas fa-link"></i> LangChain Docs
+                    </a>
+                    <a href="https://platform.openai.com/docs" class="resource-link" target="_blank">
+                        <i class="fas fa-robot"></i> OpenAI API
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="tools" class="tab-content">
+            <div class="progress-tracker">
+                <div class="progress-fill" style="width: 75%"></div>
+            </div>
+
+            <div class="section-header">
+                <i class="fas fa-code section-icon"></i>
+                <h2 class="section-title">Tools & Frameworks</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3><i class="fas fa-brain"></i> Deep Learning Frameworks</h3>
+                    <ul>
+                        <li><strong><a href="https://www.tensorflow.org/" target="_blank" style="color: #667eea;">TensorFlow</a>:</strong> <img src="https://avatars.githubusercontent.com/u/15658638?s=20" alt="TensorFlow" style="vertical-align: middle; margin-right: 5px;"> Production-ready, extensive ecosystem</li>
+                        <li><strong><a href="https://pytorch.org/" target="_blank" style="color: #667eea;">PyTorch</a>:</strong> <img src="https://avatars.githubusercontent.com/u/21003710?s=20" alt="PyTorch" style="vertical-align: middle; margin-right: 5px;"> Research-friendly, dynamic computation graphs</li>
+                        <li><strong><a href="https://jax.readthedocs.io/" target="_blank" style="color: #667eea;">JAX</a>:</strong> <img src="https://avatars.githubusercontent.com/u/15658638?s=20" alt="JAX" style="vertical-align: middle; margin-right: 5px;"> High-performance, functional programming</li>
+                        <li><strong><a href="https://keras.io/" target="_blank" style="color: #667eea;">Keras</a>:</strong> <img src="https://avatars.githubusercontent.com/u/34455048?s=20" alt="Keras" style="vertical-align: middle; margin-right: 5px;"> User-friendly high-level API</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-robot"></i> LLM & Agent Frameworks</h3>
+                    <ul>
+                        <li><strong><a href="https://python.langchain.com/" target="_blank" style="color: #667eea;">LangChain</a>:</strong> <img src="https://avatars.githubusercontent.com/u/126733545?s=20" alt="LangChain" style="vertical-align: middle; margin-right: 5px;"> LLM orchestration and agent building</li>
+                        <li><strong><a href="https://www.llamaindex.ai/" target="_blank" style="color: #667eea;">LlamaIndex</a>:</strong> <img src="https://avatars.githubusercontent.com/u/128374903?s=20" alt="LlamaIndex" style="vertical-align: middle; margin-right: 5px;"> Data framework for LLM applications</li>
+                        <li><strong><a href="https://huggingface.co/" target="_blank" style="color: #667eea;">Hugging Face</a>:</strong> <i class="fas fa-hugging-face" style="color: #ffd93d; margin-right: 5px;"></i> Model hub and transformers library</li>
+                        <li><strong><a href="https://microsoft.github.io/autogen/" target="_blank" style="color: #667eea;"></a>AutoGen</a>:</strong> <img src="https://avatars.githubusercontent.com/u/6154722?s=20" alt="Microsoft" style="vertical-align: middle; margin-right: 5px;"> Multi-agent conversation frameworks</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-database"></i> Vector Databases & Search</h3>
+                    <ul>
+                        <li><strong><a href="https://www.pinecone.io/" target="_blank" style="color: #667eea;">Pinecone</a>:</strong> <img src="https://avatars.githubusercontent.com/u/54339327?s=20" alt="Pinecone" style="vertical-align: middle; margin-right: 5px;"> Managed vector database</li>
+                        <li><strong><a href="https://weaviate.io/" target="_blank" style="color: #667eea;">Weaviate</a>:</strong> <img src="https://avatars.githubusercontent.com/u/51149926?s=20" alt="Weaviate" style="vertical-align: middle; margin-right: 5px;"> Open-source vector search</li>
+                        <li><strong><a href="https://github.com/facebookresearch/faiss" target="_blank" style="color: #667eea;">FAISS</a>:</strong> <img src="https://avatars.githubusercontent.com/u/11619502?s=20" alt="Facebook Research" style="vertical-align: middle; margin-right: 5px;"> Facebook's similarity search library</li>
+                        <li><strong><a href="https://www.trychroma.com/" target="_blank" style="color: #667eea;">Chroma</a>:</strong> <img src="https://avatars.githubusercontent.com/u/128374903?s=20" alt="Chroma" style="vertical-align: middle; margin-right: 5px;"> AI-native vector database</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-server"></i> MLOps Platforms</h3>
+                    <ul>
+                        <li><strong><a href="https://mlflow.org/" target="_blank" style="color: #667eea;">MLflow</a>:</strong> <img src="https://avatars.githubusercontent.com/u/30483722?s=20" alt="MLflow" style="vertical-align: middle; margin-right: 5px;"> Experiment tracking and model management</li>
+                        <li><strong><a href="https://www.kubeflow.org/" target="_blank" style="color: #667eea;">Kubeflow</a>:</strong> <img src="https://avatars.githubusercontent.com/u/33164907?s=20" alt="Kubeflow" style="vertical-align: middle; margin-right: 5px;"> ML pipelines on Kubernetes</li>
+                        <li><strong><a href="https://wandb.ai/" target="_blank" style="color: #667eea;">Weights & Biases</a>:</strong> <img src="https://avatars.githubusercontent.com/u/26401354?s=20" alt="Weights & Biases" style="vertical-align: middle; margin-right: 5px;"> ML experiment tracking</li>
+                        <li><strong><a href="https://dvc.org/" target="_blank" style="color: #667eea;">DVC</a>:</strong> <img src="https://avatars.githubusercontent.com/u/15000828?s=20" alt="DVC" style="vertical-align: middle; margin-right: 5px;"> Data version control</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="code-example">
+# Example: Building an AI Agent with LangChain
+from langchain.agents import initialize_agent, Tool
+from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
+
+# Initialize LLM
+llm = OpenAI(temperature=0.7)
+
+# Define tools
+def search_web(query):
+    # Implement web search functionality
+    return f"Search results for: {query}"
+
+tools = [
+    Tool(
+        name="Web Search",
+        func=search_web,
+        description="Search the web for information"
+    )
+]
+
+# Create agent
+agent = initialize_agent(
+    tools,
+    llm,
+    agent="zero-shot-react-description",
+    verbose=True
+)
+
+# Use agent
+result = agent.run("What are the latest trends in AI architecture?")
+print(result)
+            </div>
+        </div>
+
+        <div id="certification" class="tab-content">
+            <div class="progress-tracker">
+                <div class="progress-fill" style="width: 80%"></div>
+            </div>
+
+            <div class="section-header">
+                <i class="fas fa-certificate section-icon"></i>
+                <h2 class="section-title">Certification Path</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3><i class="fas fa-graduation-cap"></i> Arcitura AI Architect Certification</h3>
+                    <p>Comprehensive certification covering AI architecture fundamentals and advanced topics. Based on the training guide in your docs folder.</p>
+                    <div class="certification-badge">AI Architect Certified</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Predictive AI</span>
+                        <span class="skill-tag">Generative AI</span>
+                        <span class="skill-tag">System Design</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-cloud"></i> Cloud AI Certifications</h3>
+                    <p>AWS, Azure, and GCP offer specialized AI/ML certifications. Essential for cloud-native AI architects.</p>
+                    <div class="certification-badge">AWS ML Specialty</div>
+                    <div class="certification-badge">Azure AI Engineer</div>
+                    <div class="certification-badge">GCP ML Engineer</div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-code"></i> Technical Certifications</h3>
+                    <p>Deep learning and MLOps certifications from major platforms and organizations.</p>
+                    <div class="certification-badge">TensorFlow Developer</div>
+                    <div class="certification-badge">PyTorch Expert</div>
+                    <div class="certification-badge">MLOps Professional</div>
+                </div>
+            </div>
+
+            <div class="resource-links">
+                <h4>📜 Certification Resources</h4>
+                <div class="resource-grid">
+                    <a href="https://arcitura.com/certifications" class="resource-link" target="_blank">
+                        <i class="fas fa-award"></i> Arcitura Certifications
+                    </a>
+                    <a href="https://aws.amazon.com/certification/" class="resource-link" target="_blank">
+                        <i class="fab fa-aws"></i> AWS Certifications
+                    </a>
+                    <a href="https://learn.microsoft.com/en-us/certifications/" class="resource-link" target="_blank">
+                        <i class="fab fa-microsoft"></i> Microsoft Certifications
+                    </a>
+                    <a href="https://cloud.google.com/certification" class="resource-link" target="_blank">
+                        <i class="fab fa-google"></i> Google Cloud Certs
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="career" class="tab-content">
+            <div class="progress-tracker">
+                <div class="progress-fill" style="width: 90%"></div>
+            </div>
+
+            <div class="section-header">
+                <i class="fas fa-briefcase section-icon"></i>
+                <h2 class="section-title">Career Path & Opportunities</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3><i class="fas fa-chart-line"></i> Salary Expectations</h3>
+                    <p>AI Architects command premium salaries due to their specialized skills and strategic impact.</p>
+                    <ul>
+                        <li><strong>Entry Level:</strong> $150K - $200K</li>
+                        <li><strong>Mid Level:</strong> $200K - $280K</li>
+                        <li><strong>Senior Level:</strong> $280K - $400K+</li>
+                        <li><strong>Executive:</strong> $400K - $600K+</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-building"></i> Top Companies Hiring</h3>
+                    <p>Tech giants, consulting firms, and innovative startups are seeking AI Architects.</p>
+                    <div class="company-logos">
+                        <div class="company-logo">🏢 NVIDIA</div>
+                        <div class="company-logo">📱 Adobe</div>
+                        <div class="company-logo">☁️ AWS</div>
+                        <div class="company-logo">🔍 Google</div>
+                        <div class="company-logo">🤖 OpenAI</div>
+                        <div class="company-logo">💡 Microsoft</div>
+                        <div class="company-logo">🚀 Tesla</div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-users"></i> Career Progression</h3>
+                    <p>Clear advancement path from individual contributor to executive leadership.</p>
+                    <ul>
+                        <li><strong>AI Engineer</strong> → <strong>AI Architect</strong></li>
+                        <li><strong>AI Architect</strong> → <strong>Senior AI Architect</strong></li>
+                        <li><strong>Senior Architect</strong> → <strong>Chief AI Officer</strong></li>
+                        <li><strong>Executive</strong> → <strong>VP/Director of AI</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="resource-links">
+                <h4>💼 Career Resources</h4>
+                <div class="resource-grid">
+                    <a href="https://www.linkedin.com/jobs/ai-architect-jobs/" class="resource-link" target="_blank">
+                        <i class="fab fa-linkedin"></i> LinkedIn AI Architect Jobs
+                    </a>
+                    <a href="https://ai-jobs.net/" class="resource-link" target="_blank">
+                        <i class="fas fa-search"></i> AI-Jobs.net
+                    </a>
+                    <a href="https://www.glassdoor.com/Job/ai-architect-jobs-SRCH_KO0,12.htm" class="resource-link" target="_blank">
+                        <i class="fas fa-building"></i> Glassdoor AI Roles
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="practice" class="tab-content">
+            <div class="progress-tracker">
+                <div class="progress-fill" style="width: 95%"></div>
+            </div>
+
+            <div class="section-header">
+                <i class="fas fa-flask section-icon"></i>
+                <h2 class="section-title">Practice Labs & Exercises</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3><i class="fas fa-project-diagram"></i> Architecture Design Labs</h3>
+                    <p>Practice designing AI systems for real-world scenarios. Each lab includes requirements, constraints, and evaluation criteria.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">System Design</span>
+                        <span class="skill-tag">Requirements Analysis</span>
+                        <span class="skill-tag">Trade-off Analysis</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-code"></i> Implementation Challenges</h3>
+                    <p>Hands-on coding exercises covering ML pipelines, model deployment, and MLOps workflows.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">ML Pipelines</span>
+                        <span class="skill-tag">Model Deployment</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-users"></i> Case Studies</h3>
+                    <p>Analyze real AI architecture implementations from leading companies and learn from their successes and challenges.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Case Analysis</span>
+                        <span class="skill-tag">Best Practices</span>
+                        <span class="skill-tag">Lessons Learned</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-example">
+# Lab Exercise: Build a Simple RAG System
+from langchain.document_loaders import TextLoader
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
+from langchain.chains import RetrievalQA
+from langchain.llms import OpenAI
+
+def create_rag_system(document_path):
+    # Load document
+    loader = TextLoader(document_path)
+    documents = loader.load()
+
+    # Split text
+    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+    texts = text_splitter.split_documents(documents)
+
+    # Create embeddings and vector store
+    embeddings = OpenAIEmbeddings()
+    vectorstore = FAISS.from_documents(texts, embeddings)
+
+    # Create RAG chain
+    qa_chain = RetrievalQA.from_chain_type(
+        llm=OpenAI(),
+        chain_type="stuff",
+        retriever=vectorstore.as_retriever()
+    )
+
+    return qa_chain
+
+# Usage
+# rag_system = create_rag_system("docs/AI_Architect_2026.pdf")
+# answer = rag_system.run("What are the key responsibilities of an AI Architect?")
+            </div>
+        </div>
+
+        <div id="resources" class="tab-content">
+            <div class="progress-tracker">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+
+            <div class="section-header">
+                <i class="fas fa-book section-icon"></i>
+                <h2 class="section-title">Comprehensive Resources</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3><i class="fas fa-file-pdf"></i> Reference Documents</h3>
+                    <p>Access the source materials that informed this primer.</p>
+                    <ul>
+                        <li><strong>AI_Architect_2026.pdf:</strong> Industry job descriptions and requirements</li>
+                        <li><strong>Arcitura AI Architect Training Guide:</strong> Official certification curriculum</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-graduation-cap"></i> Online Courses</h3>
+                    <p>Structured learning paths from top educational platforms.</p>
+                    <div class="resource-links">
+                        <h4>🎓 Recommended Courses</h4>
+                        <div class="resource-grid">
+                            <a href="https://www.coursera.org/specializations/machine-learning" class="resource-link" target="_blank">
+                                <i class="fas fa-graduation-cap"></i> Machine Learning Specialization
+                            </a>
+                            <a href="https://www.deeplearning.ai/courses/" class="resource-link" target="_blank">
+                                <i class="fas fa-brain"></i> Deep Learning Courses
+                            </a>
+                            <a href="https://www.udacity.com/course/ai-product-manager-nanodegree--nd088" class="resource-link" target="_blank">
+                                <i class="fas fa-cubes"></i> AI Product Management
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-users"></i> Communities & Forums</h3>
+                    <p>Connect with fellow AI architects and stay updated with industry trends.</p>
+                    <div class="resource-links">
+                        <h4>🤝 Join Communities</h4>
+                        <div class="resource-grid">
+                            <a href="https://www.reddit.com/r/MachineLearning/" class="resource-link" target="_blank">
+                                <i class="fab fa-reddit"></i> r/MachineLearning
+                            </a>
+                            <a href="https://www.linkedin.com/groups/1824547/" class="resource-link" target="_blank">
+                                <i class="fab fa-linkedin"></i> AI Architects Group
+                            </a>
+                            <a href="https://discord.gg/machinelearning" class="resource-link" target="_blank">
+                                <i class="fab fa-discord"></i> ML Discord
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-links">
+                <h4>📚 Essential Reading</h4>
+                <div class="resource-grid">
+                    <a href="https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/" class="resource-link" target="_blank">
+                        <i class="fas fa-book"></i> Designing Machine Learning Systems
+                    </a>
+                    <a href="https://www.oreilly.com/library/view/building-machine-learning/9781492045116/" class="resource-link" target="_blank">
+                        <i class="fas fa-book"></i> Building Machine Learning Pipelines
+                    </a>
+                    <a href="https://www.manning.com/books/machine-learning-engineering" class="resource-link" target="_blank">
+                        <i class="fas fa-book"></i> Machine Learning Engineering
+                    </a>
+                    <a href="https://www.oreilly.com/library/view/practical-mlops/9781098103019/" class="resource-link" target="_blank">
+                        <i class="fas fa-book"></i> Practical MLOps
+                    </a>
+                    <a href="https://www.oreilly.com/library/view/responsible-machine-learning/9781098101732/" class="resource-link" target="_blank">
+                        <i class="fas fa-book"></i> Responsible Machine Learning
+                    </a>
+                    <a href="https://www.oreilly.com/library/view/human-in-the-loop/9781098130473/" class="resource-link" target="_blank">
+                        <i class="fas fa-book"></i> Human-in-the-Loop Machine Learning
+                    </a>
+                </div>
+            </div>
+
+            <div class="learning-objective">
+                <h4>🚀 Your Learning Journey Begins Now</h4>
+                <p>You've completed the AI Architect Primer 2026! This comprehensive guide has equipped you with the knowledge, skills, and resources needed to become a successful AI Architect. Remember: architecture is both an art and a science—practice regularly, stay curious, and never stop learning. Your future in AI architecture awaits!</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="floating-action" onclick="scrollToTop()" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+
+            const tablinks = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+
+            // Update progress bar
+            updateProgress(tabName);
+        }
+
+        function updateProgress(tabName) {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            const tabOrder = ['introduction', 'fundamentals', 'architecture', 'technologies', 'advanced', 'tools', 'certification', 'career', 'practice', 'resources'];
+            const currentIndex = tabOrder.indexOf(tabName);
+
+            if (currentIndex !== -1) {
+                const progress = ((currentIndex + 1) / tabOrder.length) * 100;
+                progressBars.forEach(bar => {
+                    bar.style.width = progress + '%';
+                });
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add smooth scrolling for resource links
+        document.querySelectorAll('.resource-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Links with target="_blank" will open in new tab
+                if (this.getAttribute('target') === '_blank') {
+                    return; // Let default behavior handle it
+                }
+                e.preventDefault();
+                // For internal links, you could add smooth scrolling here
+            });
+        });
+
+        // Initialize first tab
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.tab-button.active').click();
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const activeTab = document.querySelector('.tab-button.active');
+            const allTabs = Array.from(document.querySelectorAll('.tab-button'));
+            const currentIndex = allTabs.indexOf(activeTab);
+
+            if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                allTabs[currentIndex - 1].click();
+            } else if (e.key === 'ArrowRight' && currentIndex < allTabs.length - 1) {
+                allTabs[currentIndex + 1].click();
+            }
+        });
+    </script>
+</body>
+</html>
