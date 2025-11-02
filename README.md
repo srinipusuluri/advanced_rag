@@ -37,6 +37,7 @@ AI_Architect_2026/
 ├── AI_Architect_Primer_2026.html    # 🤖 Main learning platform
 ├── ai-architect-journey-map.html    # 🧭 Interactive journey map
 ├── ai-architect-guide.html          # 📚 Additional resources
+├── architect_qs_only.html           # 📋 Questions-only version
 ├── docs/
 │   ├── AI_Architect_2026.pdf        # 📖 Industry job descriptions
 │   └── Arcitura+AI+Architect+Training+&+Certification+Guide.pdf
@@ -95,6 +96,12 @@ By the end of this journey, you'll be able to:
 - Job search integration
 - Career development guidance
 
+### 📋 **Questions-Only Version**
+- Focused interview preparation
+- All 100 questions without answers
+- Practice mode for self-assessment
+- Quick reference for review
+
 ### 💼 **Professional Development**
 - Industry job descriptions and requirements
 - Certification pathways (Arcitura, AWS, Azure, GCP)
@@ -125,6 +132,7 @@ By the end of this journey, you'll be able to:
 2. **Open in browser**
    - Double-click `AI_Architect_Primer_2026.html` to start your journey
    - Or open `ai-architect-journey-map.html` for the interactive map
+   - Or open `architect_qs_only.html` for questions-only practice
 
 3. **Begin learning**
    - Start with "Introduction" tab
