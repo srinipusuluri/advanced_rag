@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/ML/LLM Comprehensive Framework Guide</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-bg: #1a1a2e;
+            --darker-bg: #16213e;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            background: var(--primary-gradient);
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="90" cy="30" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #a8a8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            background: var(--success-gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .tag.warning {
+            background: var(--warning-gradient);
+        }
+
+        .tag.success {
+            background: var(--success-gradient);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .framework-showcase {
+            background: var(--darker-bg);
+            padding: 60px 0;
+        }
+
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .framework-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .framework-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .framework-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .framework-category {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .framework-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .framework-features li {
+            color: var(--text-secondary);
+            padding: 5px 0;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .framework-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gradient);
+        }
+
+        .cta-section {
+            background: var(--secondary-gradient);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .cta-btn {
+            background: white;
+            color: var(--primary-gradient);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            background: rgba(26, 26, 46, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gradient);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .section {
+                padding: 40px 0;
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <nav class="nav" id="nav">
+        <div class="nav-content">
+            <div class="nav-logo">Agentic AI Hub</div>
+            <ul class="nav-links">
+                <a href="#foundations">Foundations</a>
+                <a href="#llm-ops">LLM Ops</a>
+                <a href="#rag">RAG</a>
+                <a href="#fine-tuning">Fine-tuning</a>
+                <a href="#agents">Agents</a>
+                <a href="#safety">Safety</a>
+                <a href="#stack-layers">Stack Layers</a>
+                <a href="#ai-architecture">AI Architecture</a>
+                <a href="#glossary">Glossary</a>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>AI/ML/LLM Comprehensive Framework Guide</h1>
+            <p>Master the complete AI/ML ecosystem from foundations to production deployment</p>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search frameworks, tools, or concepts...">
+                <button class="search-btn">
+                    <i data-lucide="search"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="ladder-section" style="background: var(--darker-bg); padding: 60px 0;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; background: var(--success-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">AI/ML Technology Ladder</h2>
+                <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Complete stack progression from infrastructure to applications with key tools and platforms</p>
+            </div>
+
+            <div style="position: relative; max-width: 1000px; margin: 0 auto;">
+                <!-- Ladder Structure -->
+                <div style="position: relative; height: 600px; display: flex; align-items: center; justify-content: center;">
+
+                    <!-- Left Ladder Rail -->
+                    <div style="position: absolute; left: 100px; top: 0; bottom: 0; width: 8px; background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%); border-radius: 4px; box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);"></div>
+
+                    <!-- Right Ladder Rail -->
+                    <div style="position: absolute; right: 100px; top: 0; bottom: 0; width: 8px; background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%); border-radius: 4px; box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);"></div>
+
+                    <!-- Ladder Steps -->
+                    <div style="position: relative; width: 100%; height: 100%;">
+
+                        <!-- Step 1: Infrastructure (Bottom) -->
+                        <div style="position: absolute; bottom: 0; left: 50px; right: 50px; height: 80px; display: flex; align-items: center; justify-content: space-between;">
+                            <!-- Step Line -->
+                            <div style="position: absolute; left: 0; right: 0; top: 50%; height: 4px; background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); transform: translateY(-50%); box-shadow: 0 0 15px rgba(79, 172, 254, 0.4);"></div>
+
+                            <!-- Step Content -->
+                            <div style="background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(79, 172, 254, 0.3); border-radius: 15px; padding: 20px; width: 200px; text-align: center; position: relative; z-index: 2; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(79, 172, 254, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">🚀 Infrastructure</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                    <span style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Kubernetes</span>
+                                    <span style="background: linear-gradient(135deg, #f9ca24, #f0932b); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Docker</span>
+                                    <span style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">AWS/GCP</span>
+                                </div>
+                            </div>
+
+                            <div style="width: 200px;"></div> <!-- Spacer -->
+
+                            <div style="background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(79, 172, 254, 0.3); border-radius: 15px; padding: 20px; width: 200px; text-align: center; position: relative; z-index: 2; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(79, 172, 254, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">📊 Data & Storage</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                    <span style="background: linear-gradient(135deg, #00b894, #00cec9); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">PostgreSQL</span>
+                                    <span style="background: linear-gradient(135deg, #e17055, #d63031); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">S3/GCS</span>
+                                    <span style="background: linear-gradient(135deg, #fd79a8, #fdcb6e); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">BigQuery</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: ML Platforms -->
+                        <div style="position: absolute; bottom: 120px; left: 50px; right: 50px; height: 80px; display: flex; align-items: center; justify-content: space-between;">
+                            <!-- Step Line -->
+                            <div style="position: absolute; left: 0; right: 0; top: 50%; height: 4px; background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%); transform: translateY(-50%); box-shadow: 0 0 15px rgba(67, 233, 123, 0.4);"></div>
+
+                            <!-- Step Content -->
+                            <div style="background: linear-gradient(135deg, rgba(67, 233, 123, 0.1), rgba(56, 249, 215, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(67, 233, 123, 0.3); border-radius: 15px; padding: 20px; width: 200px; text-align: center; position: relative; z-index: 2; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(67, 233, 123, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">🔧 ML Platforms</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                    <span style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">PyTorch</span>
+                                    <span style="background: linear-gradient(135deg, #4ecdc4, #44a08d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">TensorFlow</span>
+                                    <span style="background: linear-gradient(135deg, #45b7d1, #96c93d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Ray</span>
+                                </div>
+                            </div>
+
+                            <div style="width: 200px;"></div> <!-- Spacer -->
+
+                            <div style="background: linear-gradient(135deg, rgba(67, 233, 123, 0.1), rgba(56, 249, 215, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(67, 233, 123, 0.3); border-radius: 15px; padding: 20px; width: 200px; text-align: center; position: relative; z-index: 2; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(67, 233, 123, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">📈 MLOps</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                    <span style="background: linear-gradient(135deg, #f9ca24, #f0932b); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">MLflow</span>
+                                    <span style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Kubeflow</span>
+                                    <span style="background: linear-gradient(135deg, #fd79a8, #fdcb6e); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Weights & Biases</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: AI Frameworks -->
+                        <div style="position: absolute; bottom: 240px; left: 50px; right: 50px; height: 80px; display: flex; align-items: center; justify-content: space-between;">
+                            <!-- Step Line -->
+                            <div style="position: absolute; left: 0; right: 0; top: 50%; height: 4px; background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%); transform: translateY(-50%); box-shadow: 0 0 15px rgba(240, 147, 251, 0.4);"></div>
+
+                            <!-- Step Content -->
+                            <div style="background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(240, 147, 251, 0.3); border-radius: 15px; padding: 20px; width: 200px; text-align: center; position: relative; z-index: 2; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(240, 147, 251, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">🤖 AI Frameworks</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                    <span style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">LangChain</span>
+                                    <span style="background: linear-gradient(135deg, #4ecdc4, #44a08d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">LlamaIndex</span>
+                                    <span style="background: linear-gradient(135deg, #45b7d1, #96c93d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">AutoGen</span>
+                                </div>
+                            </div>
+
+                            <div style="width: 200px;"></div> <!-- Spacer -->
+
+                            <div style="background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(240, 147, 251, 0.3); border-radius: 15px; padding: 20px; width: 200px; text-align: center; position: relative; z-index: 2; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(240, 147, 251, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">🔍 RAG & Search</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                    <span style="background: linear-gradient(135deg, #f9ca24, #f0932b); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">FAISS</span>
+                                    <span style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Chroma</span>
+                                    <span style="background: linear-gradient(135deg, #fd79a8, #fdcb6e); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">pgvector</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Models & Platforms -->
+                        <div style="position: absolute; bottom: 360px; left: 50px; right: 50px; height: 80px; display: flex; align-items: center; justify-content: space-between;">
+                            <!-- Step Line -->
+                            <div style="position: absolute; left: 0; right: 0; top: 50%; height: 4px; background: linear-gradient(90deg, #fa709a 0%, #fee140 100%); transform: translateY(-50%); box-shadow: 0 0 15px rgba(250, 112, 154, 0.4);"></div>
+
+                            <!-- Step Content -->
+                            <div style="background: linear-gradient(135deg, rgba(250, 112, 154, 0.1), rgba(254, 225, 64, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(250, 112, 154, 0.3); border-radius: 15px; padding: 20px; width: 200px; text-align: center; position: relative; z-index: 2; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(250, 112, 154, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">🧠 Foundation Models</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                    <span style="background: linear-gradient(135deg, #10a37f, #44a08d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">GPT-4</span>
+                                    <span style="background: linear-gradient(135deg, #4285f4, #34a853); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Gemini</span>
+                                    <span style="background: linear-gradient(135deg, #ff9900, #232f3e); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Claude</span>
+                                </div>
+                            </div>
+
+                            <div style="width: 200px;"></div> <!-- Spacer -->
+
+                            <div style="background: linear-gradient(135deg, rgba(250, 112, 154, 0.1), rgba(254, 225, 64, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(250, 112, 154, 0.3); border-radius: 15px; padding: 20px; width: 200px; text-align: center; position: relative; z-index: 2; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(250, 112, 154, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">☁️ Cloud Platforms</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                    <span style="background: linear-gradient(135deg, #ff9900, #232f3e); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">AWS Bedrock</span>
+                                    <span style="background: linear-gradient(135deg, #4285f4, #34a853); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Vertex AI</span>
+                                    <span style="background: linear-gradient(135deg, #10a37f, #44a08d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Azure OpenAI</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Applications (Top) -->
+                        <div style="position: absolute; bottom: 480px; left: 50px; right: 50px; height: 80px; display: flex; align-items: center; justify-content: space-between;">
+                            <!-- Step Line -->
+                            <div style="position: absolute; left: 0; right: 0; top: 50%; height: 4px; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); transform: translateY(-50%); box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);"></div>
+
+                            <!-- Step Content -->
+                            <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 15px; padding: 20px; width: 200px; text-align: center; position: relative; z-index: 2; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(102, 126, 234, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">💼 Enterprise Apps</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                    <span style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">CRM Agents</span>
+                                    <span style="background: linear-gradient(135deg, #4ecdc4, #44a08d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Copilots</span>
+                                    <span style="background: linear-gradient(135deg, #45b7d1, #96c93d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Chatbots</span>
+                                </div>
+                            </div>
+
+                            <div style="width: 200px;"></div> <!-- Spacer -->
+
+                            <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 15px; padding: 20px; width: 200px; text-align: center; position: relative; z-index: 2; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(102, 126, 234, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">🎯 Use Cases</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                    <span style="background: linear-gradient(135deg, #f9ca24, #f0932b); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Doc QA</span>
+                                    <span style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Code Gen</span>
+                                    <span style="background: linear-gradient(135deg, #fd79a8, #fdcb6e); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">Analytics</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Top Platform -->
+                        <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 300px; height: 60px;">
+                            <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.1)); backdrop-filter: blur(15px); border: 2px solid rgba(102, 126, 234, 0.4); border-radius: 20px; padding: 15px; text-align: center; box-shadow: 0 0 30px rgba(102, 126, 234, 0.2);">
+                                <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 5px;">🏆 Agentic AI Hub</div>
+                                <div style="font-size: 0.9rem; color: var(--text-secondary);">Complete AI/ML/LLM Ecosystem Guide</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div style="margin-top: 60px; text-align: center;">
+                <h3 style="font-size: 1.5rem; font-weight: 600; color: var(--text-primary); margin-bottom: 30px;">Platform Categories & Tools</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto;">
+
+                    <div style="background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">🚀 Infrastructure & Data</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Kubernetes</span>
+                            <span style="background: linear-gradient(135deg, #e17055, #d63031); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">PostgreSQL</span>
+                            <span style="background: linear-gradient(135deg, #f9ca24, #f0932b); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Docker</span>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">🔧 ML & AI Frameworks</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">PyTorch</span>
+                            <span style="background: linear-gradient(135deg, #4ecdc4, #44a08d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">LangChain</span>
+                            <span style="background: linear-gradient(135deg, #45b7d1, #96c93d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Ray</span>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">🧠 Models & Platforms</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background: linear-gradient(135deg, #10a37f, #44a08d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">GPT-4</span>
+                            <span style="background: linear-gradient(135deg, #4285f4, #34a853); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Gemini</span>
+                            <span style="background: linear-gradient(135deg, #ff9900, #232f3e); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Claude</span>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">💼 Applications</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">CRM Agents</span>
+                            <span style="background: linear-gradient(135deg, #4ecdc4, #44a08d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Copilots</span>
+                            <span style="background: linear-gradient(135deg, #45b7d1, #96c93d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Doc QA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats" class="section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">AI Frameworks Covered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">400+</div>
+                    <div class="stat-label">Tools & Libraries</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">Major Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Updated Content</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="foundations" class="section animate-on-scroll">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">AI/ML Foundations</h2>
+                <p class="section-subtitle">Essential concepts and methodologies for building robust AI systems</p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                        <i data-lucide="target"></i>
+                    </div>
+                    <h3 class="card-title">Problem Framing</h3>
+                    <p class="card-description">Understanding classification vs. generation tasks and offline vs. online inference patterns</p>
+                    <div class="card-tags">
+                        <span class="tag">Classification</span>
+                        <span class="tag">Generation</span>
+                        <span class="tag">Online Inference</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <h3 class="card-title">Data Pipeline</h3>
+                    <p class="card-description">Complete data lifecycle management from curation to versioning</p>
+                    <div class="card-tags">
+                        <span class="tag">Data Curation</span>
+                        <span class="tag">PII Handling</span>
+                        <span class="tag">Versioning</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #45b7d1, #96c93d);">
+                        <i data-lucide="bar-chart-3"></i>
+                    </div>
+                    <h3 class="card-title">Metrics & Evaluation</h3>
+                    <p class="card-description">Comprehensive metrics for accuracy, latency, throughput, and cost optimization</p>
+                    <div class="card-tags">
+                        <span class="tag">Accuracy/F1</span>
+                        <span class="tag">Latency p95</span>
+                        <span class="tag">Cost/1k tokens</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f9ca24, #f0932b);">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <h3 class="card-title">Optimization Techniques</h3>
+                    <p class="card-description">Advanced optimization methods for model performance and efficiency</p>
+                    <div class="card-tags">
+                        <span class="tag">Batching</span>
+                        <span class="tag">Quantization</span>
+                        <span class="tag">Distillation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="llm-ops" class="section animate-on-scroll">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">LLM Operations</h2>
+                <p class="section-subtitle">Production-ready LLM serving, scaling, and management</p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i data-lucide="server"></i>
+                    </div>
+                    <h3 class="card-title">Serving Stacks</h3>
+                    <p class="card-description">High-performance LLM serving infrastructure and optimization</p>
+                    <div class="card-tags">
+                        <span class="tag">vLLM</span>
+                        <span class="tag">TGI</span>
+                        <span class="tag">TensorRT-LLM</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="route"></i>
+                    </div>
+                    <h3 class="card-title">Intelligent Routing</h3>
+                    <p class="card-description">Smart model selection based on cost, quality, and latency requirements</p>
+                    <div class="card-tags">
+                        <span class="tag">Model Selection</span>
+                        <span class="tag">Fallbacks</span>
+                        <span class="tag">Guardrails</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="message-square"></i>
+                    </div>
+                    <h3 class="card-title">Prompt Engineering</h3>
+                    <p class="card-description">Advanced prompting patterns and template management</p>
+                    <div class="card-tags">
+                        <span class="tag">Chain of Thought</span>
+                        <span class="tag">Few-shot</span>
+                        <span class="tag">Self-consistency</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #fdcb6e);">
+                        <i data-lucide="eye"></i>
+                    </div>
+                    <h3 class="card-title">Observability</h3>
+                    <p class="card-description">Comprehensive monitoring, logging, and tracing for LLM systems</p>
+                    <div class="card-tags">
+                        <span class="tag">Tracing</span>
+                        <span class="tag">Token Usage</span>
+                        <span class="tag">Performance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="rag" class="section animate-on-scroll">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Retrieval-Augmented Generation</h2>
+                <p class="section-subtitle">Advanced RAG systems for knowledge-intensive tasks</p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #2d3436, #636e72);">
+                        <i data-lucide="file-text"></i>
+                    </div>
+                    <h3 class="card-title">Document Processing</h3>
+                    <p class="card-description">Intelligent chunking strategies and metadata extraction</p>
+                    <div class="card-tags">
+                        <span class="tag">Semantic Chunking</span>
+                        <span class="tag">Hybrid Search</span>
+                        <span class="tag">Metadata</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #81ecec, #74b9ff);">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <h3 class="card-title">Vector Stores</h3>
+                    <p class="card-description">High-performance embedding storage and retrieval systems</p>
+                    <div class="card-tags">
+                        <span class="tag">FAISS</span>
+                        <span class="tag">Chroma</span>
+                        <span class="tag">pgvector</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                        <i data-lucide="search"></i>
+                    </div>
+                    <h3 class="card-title">Advanced Retrieval</h3>
+                    <p class="card-description">Query transformation and multi-stage retrieval strategies</p>
+                    <div class="card-tags">
+                        <span class="tag">HyDE</span>
+                        <span class="tag">Re-ranking</span>
+                        <span class="tag">Query Expansion</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fdcb6e, #e17055);">
+                        <i data-lucide="refresh-ccw"></i>
+                    </div>
+                    <h3 class="card-title">Freshness Management</h3>
+                    <p class="card-description">Real-time data ingestion and index maintenance</p>
+                    <div class="card-tags">
+                        <span class="tag">CDC</span>
+                        <span class="tag">Invalidation</span>
+                        <span class="tag">Version Lineage</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="fine-tuning" class="section animate-on-scroll">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Fine-tuning & Alignment</h2>
+                <p class="section-subtitle">Model customization and safety alignment strategies</p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #fd79a8);">
+                        <i data-lucide="git-branch"></i>
+                    </div>
+                    <h3 class="card-title">Training Strategies</h3>
+                    <p class="card-description">When and how to apply different fine-tuning approaches</p>
+                    <div class="card-tags">
+                        <span class="tag">SFT</span>
+                        <span class="tag">LoRA</span>
+                        <span class="tag">QLoRA</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 class="card-title">Alignment Methods</h3>
+                    <p class="card-description">Advanced alignment techniques for safe and helpful AI</p>
+                    <div class="card-tags">
+                        <span class="tag">DPO</span>
+                        <span class="tag">ORPO</span>
+                        <span class="tag">RLHF</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <h3 class="card-title">Training Data</h3>
+                    <p class="card-description">Dataset creation and curation for effective fine-tuning</p>
+                    <div class="card-tags">
+                        <span class="tag">Instructions</span>
+                        <span class="tag">Preferences</span>
+                        <span class="tag">Reasoning Traces</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #81ecec, #74b9ff);">
+                        <i data-lucide="check-circle"></i>
+                    </div>
+                    <h3 class="card-title">Validation & Testing</h3>
+                    <p class="card-description">Comprehensive evaluation and safety testing frameworks</p>
+                    <div class="card-tags">
+                        <span class="tag">Regression Tests</span>
+                        <span class="tag">Safety Tests</span>
+                        <span class="tag">Hallucination Tests</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="agents" class="section animate-on-scroll">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">AI Agents</h2>
+                <p class="section-subtitle">Tool-using autonomous systems and multi-agent architectures</p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                        <i data-lucide="repeat"></i>
+                    </div>
+                    <h3 class="card-title">Agent Loop</h3>
+                    <p class="card-description">Plan → Act → Observe → Reflect cycle with error handling</p>
+                    <div class="card-tags">
+                        <span class="tag">Planning</span>
+                        <span class="tag">Tool Calling</span>
+                        <span class="tag">Reflection</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <h3 class="card-title">Multi-Agent Systems</h3>
+                    <p class="card-description">Hierarchical, critic-solver, and debate patterns</p>
+                    <div class="card-tags">
+                        <span class="tag">Hierarchical</span>
+                        <span class="tag">Critic-Solver</span>
+                        <span class="tag">Debate</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #45b7d1, #96c93d);">
+                        <i data-lucide="wrench"></i>
+                    </div>
+                    <h3 class="card-title">Tool Integration</h3>
+                    <p class="card-description">Function calling, MCP, and sandboxed execution</p>
+                    <div class="card-tags">
+                        <span class="tag">Function Calling</span>
+                        <span class="tag">MCP</span>
+                        <span class="tag">Sandboxing</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f9ca24, #f0932b);">
+                        <i data-lucide="brain"></i>
+                    </div>
+                    <h3 class="card-title">Memory Systems</h3>
+                    <p class="card-description">Episodic and vector-based memory management</p>
+                    <div class="card-tags">
+                        <span class="tag">Episodic Memory</span>
+                        <span class="tag">Vector Memory</span>
+                        <span class="tag">Scratchpads</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="safety" class="section animate-on-scroll">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Safety & Governance</h2>
+                <p class="section-subtitle">Production safety, red-teaming, and governance frameworks</p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i data-lucide="filter"></i>
+                    </div>
+                    <h3 class="card-title">Input/Output Filters</h3>
+                    <p class="card-description">Pre and post-processing safety filters and validation</p>
+                    <div class="card-tags">
+                        <span class="tag">PII Redaction</span>
+                        <span class="tag">Toxicity Check</span>
+                        <span class="tag">Jailbreak Detection</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="shield-alert"></i>
+                    </div>
+                    <h3 class="card-title">Red Teaming</h3>
+                    <p class="card-description">Comprehensive security testing and adversarial evaluation</p>
+                    <div class="card-tags">
+                        <span class="tag">Jailbreak Tests</span>
+                        <span class="tag">Prompt Injection</span>
+                        <span class="tag">Tool Abuse</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="bar-chart-3"></i>
+                    </div>
+                    <h3 class="card-title">Safety Scorecards</h3>
+                    <p class="card-description">Quality, safety, and reliability metrics and monitoring</p>
+                    <div class="card-tags">
+                        <span class="tag">Win Rate</span>
+                        <span class="tag">Safety Violations</span>
+                        <span class="tag">Reliability</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #fdcb6e);">
+                        <i data-lucide="deployment"></i>
+                    </div>
+                    <h3 class="card-title">Deployment Safety</h3>
+                    <p class="card-description">Canary deployments, rollbacks, and kill switches</p>
+                    <div class="card-tags">
+                        <span class="tag">Canary</span>
+                        <span class="tag">Shadow Deploy</span>
+                        <span class="tag">Kill Switches</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stack-layers" class="section animate-on-scroll">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">AI/ML Stack Layers</h2>
+                <p class="section-subtitle">Complete technology stack from applications to infrastructure</p>
+            </div>
+
+            <!-- Stack Layers Flow -->
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                        <i data-lucide="layers"></i>
+                    </div>
+                    <h3 class="card-title">Applications / Use-Cases</h3>
+                    <p class="card-description">End-user applications and business solutions built on AI</p>
+                    <div class="card-tags">
+                        <span class="tag">CRM agents</span>
+                        <span class="tag">call-center AI</span>
+                        <span class="tag">copilots</span>
+                        <span class="tag">doc QA/summarization</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">
+                        <i data-lucide="git-branch"></i>
+                    </div>
+                    <h3 class="card-title">Agent orchestration</h3>
+                    <p class="card-description">Frameworks for building and managing AI agent systems</p>
+                    <div class="card-tags">
+                        <span class="tag">OpenAI Assistants</span>
+                        <span class="tag">LangGraph</span>
+                        <span class="tag">AutoGen</span>
+                        <span class="tag">MCP tool registry</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #45b7d1, #96c93d);">
+                        <i data-lucide="brain"></i>
+                    </div>
+                    <h3 class="card-title">LLMs (text + multimodal)</h3>
+                    <p class="card-description">Large language models and vision-language models</p>
+                    <div class="card-tags">
+                        <span class="tag">GPT-4o/o3</span>
+                        <span class="tag">Gemini 1.5/2.0</span>
+                        <span class="tag">Claude 3.x</span>
+                        <span class="tag">Llama 3.1</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f9ca24, #f0932b);">
+                        <i data-lucide="search"></i>
+                    </div>
+                    <h3 class="card-title">Retrieval & tools</h3>
+                    <p class="card-description">Information retrieval systems and enterprise integrations</p>
+                    <div class="card-tags">
+                        <span class="tag">text-embedding-3</span>
+                        <span class="tag">Vector DB</span>
+                        <span class="tag">Cohere Rerank</span>
+                        <span class="tag">Enterprise APIs</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i data-lucide="server"></i>
+                    </div>
+                    <h3 class="card-title">Serving & infra</h3>
+                    <p class="card-description">Model serving infrastructure and optimization platforms</p>
+                    <div class="card-tags">
+                        <span class="tag">vLLM</span>
+                        <span class="tag">Vertex AI</span>
+                        <span class="tag">Bedrock</span>
+                        <span class="tag">Ray Serve</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="eye"></i>
+                    </div>
+                    <h3 class="card-title">Observability, eval & safety</h3>
+                    <p class="card-description">Monitoring, evaluation, and safety frameworks</p>
+                    <div class="card-tags">
+                        <span class="tag">Langfuse</span>
+                        <span class="tag">RAGAS</span>
+                        <span class="tag">Llama Guard</span>
+                        <span class="tag">PII redaction</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <h3 class="card-title">Data & storage</h3>
+                    <p class="card-description">Data storage, analytics, and feature management</p>
+                    <div class="card-tags">
+                        <span class="tag">S3/GCS</span>
+                        <span class="tag">Postgres</span>
+                        <span class="tag">BigQuery</span>
+                        <span class="tag">Feast</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stack Combos by Vendor -->
+            <div style="margin-top: 80px;">
+                <h2 style="text-align: center; font-size: 2.2rem; font-weight: 700; margin-bottom: 20px; background: var(--warning-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Five Concrete Stack Combos (by vendor posture)</h2>
+
+                <!-- OpenAI-centric -->
+                <div class="card" style="margin-bottom: 30px; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #10a37f, #44a08d); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">
+                            <span style="color: white; font-weight: bold; font-size: 1.2rem;">O</span>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.6rem; font-weight: 600; margin: 0; color: var(--text-primary);">OpenAI-centric (quickest to value)</h3>
+                            <p style="margin: 5px 0 0 0; color: var(--text-secondary); font-size: 1rem;">Complete stack using OpenAI's ecosystem</p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Agents</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Assistants API + LangGraph</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Models</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">GPT-4o / o4-mini (+ Realtime if voice)</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">RAG</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">text-embedding-3 + Pinecone/pgvector, Cohere Rerank</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Serving</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">OpenAI API (vLLM fallback for OSS)</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Obs/Safety</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Langfuse + OpenAI Moderation + Presidio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gemini-centric -->
+                <div class="card" style="margin-bottom: 30px; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #4285f4, #34a853); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">
+                            <span style="color: white; font-weight: bold; font-size: 1.2rem;">G</span>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.6rem; font-weight: 600; margin: 0; color: var(--text-primary);">Gemini-centric (Google)</h3>
+                            <p style="margin: 5px 0 0 0; color: var(--text-secondary); font-size: 1rem;">Google Cloud ecosystem integration</p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Agents</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Vertex AI Agents + LangChain (Vertex)</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Models</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Gemini 1.5 Pro/Flash; Imagen for gen; Chirp ASR</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">RAG</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Vertex Search & Grounding + AlloyDB pgvector</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Serving</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Vertex endpoints</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Obs/Safety</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Vertex Monitoring + DLP</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bedrock/Anthropic-centric -->
+                <div class="card" style="margin-bottom: 30px; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ff9900, #232f3e); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">
+                            <span style="color: white; font-weight: bold; font-size: 1.2rem;">A</span>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.6rem; font-weight: 600; margin: 0; color: var(--text-primary);">Bedrock/Anthropic-centric (AWS)</h3>
+                            <p style="margin: 5px 0 0 0; color: var(--text-secondary); font-size: 1rem;">Amazon Web Services ecosystem</p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Agents</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Bedrock Agents + Step Functions; LangChain AWS</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Models</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Claude 3.5 Sonnet; Llama 3.1 via Bedrock</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">RAG</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Kendra/OpenSearch + S3; Cohere Rerank</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Serving</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Bedrock/SageMaker/Triton on EKS</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Obs/Safety</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">CloudWatch, Bedrock Guardrails, WhyLabs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Open-source / Local -->
+                <div class="card" style="margin-bottom: 30px; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ff6b6b, #4ecdc4); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">
+                            <span style="color: white; font-weight: bold; font-size: 1.2rem;">OS</span>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.6rem; font-weight: 600; margin: 0; color: var(--text-primary);">Open-source / Local (max control)</h3>
+                            <p style="margin: 5px 0 0 0; color: var(--text-secondary); font-size: 1rem;">Self-hosted and open-source stack</p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Agents</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">LangGraph or CrewAI; AutoGen for multi-agent</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Models</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Llama 3.1 / Mixtral / Qwen2; LLaVA or Florence-2 for vision</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">RAG</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">FAISS/Milvus/Chroma + pgvector; bge-reranker</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Serving</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">vLLM/TGI, Ray Serve, Ollama (dev)</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Obs/Safety</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Langfuse + W&B; Llama Guard</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hybrid Enterprise -->
+                <div class="card" style="margin-bottom: 30px; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #764ba2, #667eea); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">
+                            <span style="color: white; font-weight: bold; font-size: 1.2rem;">H</span>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.6rem; font-weight: 600; margin: 0; color: var(--text-primary);">Hybrid Enterprise (best-of-breed)</h3>
+                            <p style="margin: 5px 0 0 0; color: var(--text-secondary); font-size: 1rem;">Mix of best tools for enterprise needs</p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Agents</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Agentforce (Salesforce) + LangGraph + MCP</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Models</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Blend of GPT-4o + Claude; private Llama 3.1 for cost control</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">RAG</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">Snowflake/DB vector + Pinecone; Cohere Rerank</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Serving</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">API Gateway + vLLM for OSS, vendor APIs for premium</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">Obs/Safety</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">MLflow/Langfuse + OneTrust/BigID for DLP</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ai-architecture" class="section animate-on-scroll">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">AI-First Architecture Patterns</h2>
+                <p class="section-subtitle">Production-ready AI architectures for common enterprise use cases</p>
+            </div>
+
+            <!-- Use Case Architectures -->
+            <div class="grid">
+                <!-- Lead triage & routing -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                        <i data-lucide="route"></i>
+                    </div>
+                    <h3 class="card-title">Lead triage & routing</h3>
+                    <p class="card-description">Intelligent lead qualification and assignment system</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Channels:</strong> web/chat/email</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Orchestrator:</strong> LangGraph/Assistants (planner+tool-router+memory)</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> GPT-4o/Gemini (+ Claude fallback)</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> Pinecone/pgvector + re-rank</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> CRM API (create/assign), enrichment</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> policy prompts, redaction, Langfuse</div>
+                    </div>
+                </div>
+
+                <!-- Case deflection & KB copilot -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">
+                        <i data-lucide="help-circle"></i>
+                    </div>
+                    <h3 class="card-title">Case deflection & KB copilot</h3>
+                    <p class="card-description">Self-service support with knowledge base assistance</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Channels:</strong> portal widget</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Orchestrator:</strong> LangGraph</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> multimodal LLM (GPT-4o/Gemini)</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> hybrid BM25+dense, version lineage</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> KB search/update, ticket deflect</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> groundedness evals (RAGAS), tracing</div>
+                    </div>
+                </div>
+
+                <!-- Quote guidance / CPQ copilot -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #45b7d1, #96c93d);">
+                        <i data-lucide="file-text"></i>
+                    </div>
+                    <h3 class="card-title">Quote guidance / CPQ copilot</h3>
+                    <p class="card-description">AI-assisted pricing and quote generation</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Trigger:</strong> opp/quote open</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Orchestrator:</strong> multi-agent (pricing/legal/approvals)</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> pricing rules, discount policy, contracts</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> CPQ, approvals, e-sign</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> policy prompts, audit logs</div>
+                    </div>
+                </div>
+
+                <!-- Collections risk navigator -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f9ca24, #f0932b);">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <h3 class="card-title">Collections risk navigator</h3>
+                    <p class="card-description">Risk assessment and collections strategy</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Data:</strong> invoices/aging/comms</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> classifier + LLM explainer</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> dunning policies</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> email/SMS follow-ups, payment links</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> redaction; outcome tracking</div>
+                    </div>
+                </div>
+
+                <!-- Supplier onboarding (KYC/KYB) copilot -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i data-lucide="user-check"></i>
+                    </div>
+                    <h3 class="card-title">Supplier onboarding (KYC/KYB) copilot</h3>
+                    <p class="card-description">Automated compliance and verification</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Inputs:</strong> forms/IDs</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> IDP/OCR + LLM</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> policy per country</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> sanctions, bank-verify, tax forms</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> PII vault, audit</div>
+                    </div>
+                </div>
+
+                <!-- Call-center QA & coaching -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="headphones"></i>
+                    </div>
+                    <h3 class="card-title">Call-center QA & coaching</h3>
+                    <p class="card-description">Quality assurance and agent coaching</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Inputs:</strong> chat/voice transcripts</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> ASR (Whisper/Chirp) + LLM rubric</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> policy & scripts</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> QA scorecards, coaching tasks</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> sampling, drift checks</div>
+                    </div>
+                </div>
+
+                <!-- Voice IVR agent -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="phone"></i>
+                    </div>
+                    <h3 class="card-title">Voice IVR agent</h3>
+                    <p class="card-description">Conversational phone automation</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Channels:</strong> telephony</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> streaming LLM + ASR/TTS (Realtime/Whisper/Twilio)</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> account lookup, order status, reset flows</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety:</strong> allow/deny tools, step-up auth</div>
+                    </div>
+                </div>
+
+                <!-- Contract Q&A / redlines -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #fdcb6e);">
+                        <i data-lucide="file-check"></i>
+                    </div>
+                    <h3 class="card-title">Contract Q&A / redlines</h3>
+                    <p class="card-description">Legal document analysis and editing</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Inputs:</strong> contracts</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> clause library + prior redlines</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> LLM + re-rank</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> compare/suggest edits, route to legal</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> citation checks</div>
+                    </div>
+                </div>
+
+                <!-- AP invoice triage (IDP + LLM) -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #81ecec, #74b9ff);">
+                        <i data-lucide="receipt"></i>
+                    </div>
+                    <h3 class="card-title">AP invoice triage (IDP + LLM)</h3>
+                    <p class="card-description">Accounts payable document processing</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Inputs:</strong> PDFs/EDI</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> OCR + LLM</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> vendor glossary, PO/GRN rules</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> ERP post, duplicate detect, exception routing</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety:</strong> confidence thresholds</div>
+                    </div>
+                </div>
+
+                <!-- Field service vision assistant -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                        <i data-lucide="camera"></i>
+                    </div>
+                    <h3 class="card-title">Field service vision assistant</h3>
+                    <p class="card-description">Visual troubleshooting and guidance</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Inputs:</strong> photos/video</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> ViT/LLaVA/Florence-2 + LLM</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> manuals/troubleshooting trees</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> parts order, notes, scheduling</div>
+                    </div>
+                </div>
+
+                <!-- Customer churn prediction -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff7675, #d63031);">
+                        <i data-lucide="trending-down"></i>
+                    </div>
+                    <h3 class="card-title">Customer churn prediction</h3>
+                    <p class="card-description">Predictive analytics for customer retention</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Data:</strong> usage patterns, support tickets, billing history</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> XGBoost/LightGBM + LLM explanations</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> historical churn cases, retention playbooks</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> retention campaigns, discount offers, success plans</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> bias monitoring, model drift detection</div>
+                    </div>
+                </div>
+
+                <!-- Document classification & routing -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #74b9ff, #0984e3);">
+                        <i data-lucide="folder-tree"></i>
+                    </div>
+                    <h3 class="card-title">Document classification & routing</h3>
+                    <p class="card-description">Intelligent document processing and workflow automation</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Inputs:</strong> emails, PDFs, forms, invoices</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> LayoutLM/Donut + classification LLM</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> document templates, routing rules, compliance policies</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> workflow engines, approval chains, archival systems</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> accuracy thresholds, compliance logging</div>
+                    </div>
+                </div>
+
+                <!-- Sales forecasting assistant -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="bar-chart-3"></i>
+                    </div>
+                    <h3 class="card-title">Sales forecasting assistant</h3>
+                    <p class="card-description">AI-powered sales predictions and pipeline insights</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Data:</strong> historical sales, market data, pipeline status</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> Prophet/TimeGPT + LLM analysis</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> market reports, competitor analysis, seasonal patterns</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> CRM updates, quota planning, territory optimization</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> forecast accuracy tracking, bias detection</div>
+                    </div>
+                </div>
+
+                <!-- HR employee onboarding -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #a29bfe, #6c5ce7);">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <h3 class="card-title">HR employee onboarding</h3>
+                    <p class="card-description">Personalized onboarding experiences and compliance</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Inputs:</strong> employee profiles, role requirements, company policies</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> recommendation systems + LLM personalization</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> HR policies, training materials, compliance docs</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> learning management, compliance tracking, buddy matching</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> PII protection, compliance audit trails</div>
+                    </div>
+                </div>
+
+                <!-- Fraud detection & prevention -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="shield-alert"></i>
+                    </div>
+                    <h3 class="card-title">Fraud detection & prevention</h3>
+                    <p class="card-description">Real-time fraud monitoring and alerting</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Data:</strong> transaction patterns, user behavior, device fingerprints</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> anomaly detection (Isolation Forest) + LLM explanations</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> fraud patterns, regulatory requirements, case histories</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> real-time blocking, case management, regulatory reporting</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> false positive monitoring, regulatory compliance</div>
+                    </div>
+                </div>
+
+                <!-- Product recommendation engine -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                        <i data-lucide="shopping-cart"></i>
+                    </div>
+                    <h3 class="card-title">Product recommendation engine</h3>
+                    <p class="card-description">Personalized product and content recommendations</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Data:</strong> browsing history, purchase behavior, preferences</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> collaborative filtering + transformer recommenders</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> product catalogs, user reviews, inventory status</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> A/B testing, personalization rules, inventory sync</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> diversity metrics, bias detection, privacy compliance</div>
+                    </div>
+                </div>
+
+                <!-- Supply chain optimization -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #55a3ff);">
+                        <i data-lucide="truck"></i>
+                    </div>
+                    <h3 class="card-title">Supply chain optimization</h3>
+                    <p class="card-description">Demand forecasting and inventory management</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Data:</strong> sales data, supplier lead times, market trends</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> time series forecasting + optimization algorithms</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> supplier contracts, demand patterns, economic indicators</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> ERP integration, automated reordering, supplier communication</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> cost impact tracking, supplier performance monitoring</div>
+                    </div>
+                </div>
+
+                <!-- Legal research assistant -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i data-lucide="scale"></i>
+                    </div>
+                    <h3 class="card-title">Legal research assistant</h3>
+                    <p class="card-description">Case law analysis and legal document review</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Inputs:</strong> legal documents, case queries, statutes</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> legal-specific LLMs (Jurassic-2, LexLM) + embeddings</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> case law databases, legal precedents, regulatory updates</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> citation finder, document comparison, research reports</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> accuracy validation, citation verification, confidentiality</div>
+                    </div>
+                </div>
+
+                <!-- Medical diagnosis support -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00cec9, #55efc4);">
+                        <i data-lucide="activity"></i>
+                    </div>
+                    <h3 class="card-title">Medical diagnosis support</h3>
+                    <p class="card-description">Clinical decision support and diagnostic assistance</p>
+                    <div style="margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Inputs:</strong> patient symptoms, medical history, test results</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Models:</strong> medical LLMs (Med-PaLM, BioBERT) + diagnostic classifiers</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>RAG:</strong> medical literature, clinical guidelines, drug databases</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Tools:</strong> treatment recommendations, drug interaction checks, referral suggestions</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;"><strong>Safety/Obs:</strong> clinical validation, liability disclaimers, audit trails</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stack Selector -->
+            <div style="margin-top: 80px;">
+                <h2 style="text-align: center; font-size: 2.2rem; font-weight: 700; margin-bottom: 40px; background: var(--success-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Stack Selector (quick bullets to pair with any use case)</h2>
+
+                <div class="grid">
+                    <!-- OpenAI-centric -->
+                    <div class="card" style="background: linear-gradient(135deg, rgba(16, 163, 127, 0.1), rgba(68, 160, 141, 0.05)); border: 1px solid rgba(16, 163, 127, 0.3);">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #10a37f, #44a08d); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                <span style="color: white; font-weight: bold; font-size: 1rem;">O</span>
+                            </div>
+                            <h3 style="font-size: 1.3rem; font-weight: 600; margin: 0; color: var(--text-primary);">OpenAI-centric</h3>
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                            Assistants + GPT-4o • text-embedding-3 → Pinecone/pgvector • Cohere Rerank • Langfuse
+                        </div>
+                    </div>
+
+                    <!-- Gemini-centric -->
+                    <div class="card" style="background: linear-gradient(135deg, rgba(66, 133, 244, 0.1), rgba(52, 168, 83, 0.05)); border: 1px solid rgba(66, 133, 244, 0.3);">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4285f4, #34a853); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                <span style="color: white; font-weight: bold; font-size: 1rem;">G</span>
+                            </div>
+                            <h3 style="font-size: 1.3rem; font-weight: 600; margin: 0; color: var(--text-primary);">Gemini-centric</h3>
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                            Vertex Agents + Gemini 1.5 • Vertex Search & Grounding • AlloyDB pgvector • Vertex Monitoring/DLP
+                        </div>
+                    </div>
+
+                    <!-- Bedrock/Anthropic -->
+                    <div class="card" style="background: linear-gradient(135deg, rgba(255, 153, 0, 0.1), rgba(35, 47, 62, 0.05)); border: 1px solid rgba(255, 153, 0, 0.3);">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #ff9900, #232f3e); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                <span style="color: white; font-weight: bold; font-size: 1rem;">A</span>
+                            </div>
+                            <h3 style="font-size: 1.3rem; font-weight: 600; margin: 0; color: var(--text-primary);">Bedrock/Anthropic</h3>
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                            Bedrock Agents + Claude 3.5 • Kendra/OpenSearch • Guardrails + CloudWatch
+                        </div>
+                    </div>
+
+                    <!-- Open-source -->
+                    <div class="card" style="background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.05)); border: 1px solid rgba(255, 107, 107, 0.3);">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #ff6b6b, #4ecdc4); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                <span style="color: white; font-weight: bold; font-size: 1rem;">OS</span>
+                            </div>
+                            <h3 style="font-size: 1.3rem; font-weight: 600; margin: 0; color: var(--text-primary);">Open-source</h3>
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                            LangGraph/CrewAI + Llama 3.1/Mixtral (vLLM) • Milvus/FAISS/Chroma • bge-reranker • Langfuse/W&B
+                        </div>
+                    </div>
+
+                    <!-- Hybrid enterprise -->
+                    <div class="card" style="background: linear-gradient(135deg, rgba(118, 75, 162, 0.1), rgba(102, 126, 234, 0.05)); border: 1px solid rgba(118, 75, 162, 0.3);">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #764ba2, #667eea); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                <span style="color: white; font-weight: bold; font-size: 1rem;">H</span>
+                            </div>
+                            <h3 style="font-size: 1.3rem; font-weight: 600; margin: 0; color: var(--text-primary);">Hybrid enterprise</h3>
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                            Agentforce + LangGraph • GPT-4o + Claude + private Llama • Snowflake Vector + Pinecone • OneTrust/BigID
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="framework-showcase animate-on-scroll">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Framework Showcase</h2>
+                <p class="section-subtitle">Popular frameworks and tools across the AI/ML ecosystem</p>
+            </div>
+
+            <div class="framework-grid">
+                <div class="framework-card">
+                    <div class="framework-name">PyTorch</div>
+                    <div class="framework-category">Deep Learning Framework</div>
+                    <ul class="framework-features">
+                        <li>Dynamic computation graphs</li>
+                        <li>Rich ecosystem</li>
+                        <li>Production deployment</li>
+                        <li>Distributed training</li>
+                    </ul>
+                </div>
+
+                <div class="framework-card">
+                    <div class="framework-name">LangChain</div>
+                    <div class="framework-category">LLM Application Framework</div>
+                    <ul class="framework-features">
+                        <li>Chain composition</li>
+                        <li>Memory management</li>
+                        <li>Tool integration</li>
+                        <li>Agent frameworks</li>
+                    </ul>
+                </div>
+
+                <div class="framework-card">
+                    <div class="framework-name">Hugging Face</div>
+                    <div class="framework-category">ML Platform</div>
+                    <ul class="framework-features">
+                        <li>Model hub</li>
+                        <li>Transformers library</li>
+                        <li>Dataset hosting</li>
+                        <li>Community tools</li>
+                    </ul>
+                </div>
+
+                <div class="framework-card">
+                    <div class="framework-name">Ray</div>
+                    <div class="framework-category">Distributed Computing</div>
+                    <ul class="framework-features">
+                        <li>Distributed training</li>
+                        <li>Model serving</li>
+                        <li>Reinforcement learning</li>
+                        <li>Hyperparameter tuning</li>
+                    </ul>
+                </div>
+
+                <div class="framework-card">
+                    <div class="framework-name">MLflow</div>
+                    <div class="framework-category">ML Lifecycle Management</div>
+                    <ul class="framework-features">
+                        <li>Experiment tracking</li>
+                        <li>Model registry</li>
+                        <li>Model deployment</li>
+                        <li>Reproducibility</li>
+                    </ul>
+                </div>
+
+                <div class="framework-card">
+                    <div class="framework-name">Weights & Biases</div>
+                    <div class="framework-category">ML Operations Platform</div>
+                    <ul class="framework-features">
+                        <li>Experiment tracking</li>
+                        <li>Model monitoring</li>
+                        <li>Dataset versioning</li>
+                        <li>Collaboration tools</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Build the Future?</h2>
+                <p>Explore our comprehensive guides, tutorials, and best practices for AI/ML development</p>
+                <a href="#glossary" class="cta-btn">View AI Glossary</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="glossary" class="section animate-on-scroll">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">AI Agent Glossary</h2>
+                <p class="section-subtitle">Comprehensive definitions of key terms and concepts in AI/ML/LLM systems</p>
+            </div>
+
+            <div class="grid">
+                <!-- AI/ML Foundations -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                        <i data-lucide="target"></i>
+                    </div>
+                    <h3 class="card-title">Classification vs Generation</h3>
+                    <p class="card-description">Classification tasks involve categorizing inputs into predefined labels, while generation tasks create new content based on learned patterns.</p>
+                    <div class="card-tags">
+                        <span class="tag">Supervised Learning</span>
+                        <span class="tag">Output Types</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <h3 class="card-title">PII (Personally Identifiable Information)</h3>
+                    <p class="card-description">Any data that can identify an individual, such as names, addresses, social security numbers, or biometric data requiring special handling and protection.</p>
+                    <div class="card-tags">
+                        <span class="tag">Privacy</span>
+                        <span class="tag">Data Protection</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #45b7d1, #96c93d);">
+                        <i data-lucide="bar-chart-3"></i>
+                    </div>
+                    <h3 class="card-title">p95 Latency</h3>
+                    <p class="card-description">The 95th percentile of response times, meaning 95% of requests are faster than this value. Critical for measuring system performance under load.</p>
+                    <div class="card-tags">
+                        <span class="tag">Performance</span>
+                        <span class="tag">SLA</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f9ca24, #f0932b);">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <h3 class="card-title">Model Quantization</h3>
+                    <p class="card-description">Reducing the precision of model weights (e.g., from 32-bit to 8-bit) to decrease memory usage and increase inference speed while maintaining acceptable accuracy.</p>
+                    <div class="card-tags">
+                        <span class="tag">Optimization</span>
+                        <span class="tag">Deployment</span>
+                    </div>
+                </div>
+
+                <!-- LLM Operations -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i data-lucide="server"></i>
+                    </div>
+                    <h3 class="card-title">vLLM</h3>
+                    <p class="card-description">High-throughput, memory-efficient inference engine for large language models with advanced memory management and continuous batching.</p>
+                    <div class="card-tags">
+                        <span class="tag">Serving</span>
+                        <span class="tag">Performance</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="route"></i>
+                    </div>
+                    <h3 class="card-title">Guardrails</h3>
+                    <p class="card-description">Safety mechanisms that prevent models from generating harmful, inappropriate, or off-topic content through input/output filtering and validation.</p>
+                    <div class="card-tags">
+                        <span class="tag">Safety</span>
+                        <span class="tag">Content Policy</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="message-square"></i>
+                    </div>
+                    <h3 class="card-title">Chain of Thought (CoT)</h3>
+                    <p class="card-description">Prompting technique where models are instructed to break down complex problems into step-by-step reasoning before providing final answers.</p>
+                    <div class="card-tags">
+                        <span class="tag">Prompting</span>
+                        <span class="tag">Reasoning</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #fdcb6e);">
+                        <i data-lucide="eye"></i>
+                    </div>
+                    <h3 class="card-title">Token Usage</h3>
+                    <p class="card-description">Tracking input and output tokens for cost management and performance monitoring in LLM systems.</p>
+                    <div class="card-tags">
+                        <span class="tag">Monitoring</span>
+                        <span class="tag">Cost</span>
+                    </div>
+                </div>
+
+                <!-- RAG Systems -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #2d3436, #636e72);">
+                        <i data-lucide="file-text"></i>
+                    </div>
+                    <h3 class="card-title">Semantic Chunking</h3>
+                    <p class="card-description">Breaking documents into meaningful sections based on content similarity rather than fixed sizes, preserving context and relationships.</p>
+                    <div class="card-tags">
+                        <span class="tag">Document Processing</span>
+                        <span class="tag">Context</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #81ecec, #74b9ff);">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <h3 class="card-title">FAISS</h3>
+                    <p class="card-description">Facebook AI Similarity Search - efficient library for similarity search and clustering of dense vectors, optimized for memory usage and speed.</p>
+                    <div class="card-tags">
+                        <span class="tag">Vector Search</span>
+                        <span class="tag">Performance</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                        <i data-lucide="search"></i>
+                    </div>
+                    <h3 class="card-title">HyDE (Hypothetical Document Embeddings)</h3>
+                    <p class="card-description">Technique that generates hypothetical answer documents before embedding, improving retrieval quality for complex queries.</p>
+                    <div class="card-tags">
+                        <span class="tag">Retrieval</span>
+                        <span class="tag">Query Enhancement</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fdcb6e, #e17055);">
+                        <i data-lucide="refresh-ccw"></i>
+                    </div>
+                    <h3 class="card-title">CDC (Change Data Capture)</h3>
+                    <p class="card-description">Process of identifying and capturing changes made to data in a database, enabling real-time updates to search indexes.</p>
+                    <div class="card-tags">
+                        <span class="tag">Data Pipeline</span>
+                        <span class="tag">Real-time</span>
+                    </div>
+                </div>
+
+                <!-- Fine-tuning & Alignment -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #fd79a8);">
+                        <i data-lucide="git-branch"></i>
+                    </div>
+                    <h3 class="card-title">LoRA (Low-Rank Adaptation)</h3>
+                    <p class="card-description">Parameter-efficient fine-tuning method that updates only a small subset of model parameters, reducing memory and compute requirements.</p>
+                    <div class="card-tags">
+                        <span class="tag">Fine-tuning</span>
+                        <span class="tag">Efficiency</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 class="card-title">DPO (Direct Preference Optimization)</h3>
+                    <p class="card-description">Alignment technique that directly optimizes models based on human preferences without requiring complex reward modeling.</p>
+                    <div class="card-tags">
+                        <span class="tag">Alignment</span>
+                        <span class="tag">RLHF Alternative</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <h3 class="card-title">Reasoning Traces</h3>
+                    <p class="card-description">Step-by-step explanations of model reasoning processes, used as training data to improve model transparency and performance.</p>
+                    <div class="card-tags">
+                        <span class="tag">Training Data</span>
+                        <span class="tag">Explainability</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #81ecec, #74b9ff);">
+                        <i data-lucide="check-circle"></i>
+                    </div>
+                    <h3 class="card-title">Hallucination Tests</h3>
+                    <p class="card-description">Evaluation methods to detect when models generate factually incorrect or fabricated information.</p>
+                    <div class="card-tags">
+                        <span class="tag">Safety</span>
+                        <span class="tag">Reliability</span>
+                    </div>
+                </div>
+
+                <!-- AI Agents -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                        <i data-lucide="repeat"></i>
+                    </div>
+                    <h3 class="card-title">Agent Loop</h3>
+                    <p class="card-description">Iterative cycle of planning actions, executing them, observing results, and reflecting on outcomes to improve future performance.</p>
+                    <div class="card-tags">
+                        <span class="tag">Autonomy</span>
+                        <span class="tag">Decision Making</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <h3 class="card-title">Multi-Agent Systems</h3>
+                    <p class="card-description">Systems where multiple AI agents interact, collaborate, or compete to solve complex tasks more effectively than single agents.</p>
+                    <div class="card-tags">
+                        <span class="tag">Collaboration</span>
+                        <span class="tag">Scalability</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #45b7d1, #96c93d);">
+                        <i data-lucide="wrench"></i>
+                    </div>
+                    <h3 class="card-title">Function Calling</h3>
+                    <p class="card-description">Capability that allows LLMs to call external functions or APIs to perform specific tasks or retrieve real-time information.</p>
+                    <div class="card-tags">
+                        <span class="tag">Tool Use</span>
+                        <span class="tag">Integration</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f9ca24, #f0932b);">
+                        <i data-lucide="brain"></i>
+                    </div>
+                    <h3 class="card-title">Episodic Memory</h3>
+                    <p class="card-description">Memory system that stores and retrieves specific experiences and events, enabling agents to recall past interactions and outcomes.</p>
+                    <div class="card-tags">
+                        <span class="tag">Memory</span>
+                        <span class="tag">Context</span>
+                    </div>
+                </div>
+
+                <!-- Safety & Governance -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i data-lucide="filter"></i>
+                    </div>
+                    <h3 class="card-title">Jailbreak Detection</h3>
+                    <p class="card-description">Systems that identify attempts to coerce models into breaking their safety rules or generating prohibited content.</p>
+                    <div class="card-tags">
+                        <span class="tag">Security</span>
+                        <span class="tag">Adversarial</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="shield-alert"></i>
+                    </div>
+                    <h3 class="card-title">Prompt Injection</h3>
+                    <p class="card-description">Security vulnerability where malicious instructions are hidden in user inputs to override system prompts and safety measures.</p>
+                    <div class="card-tags">
+                        <span class="tag">Security</span>
+                        <span class="tag">Attack Vector</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="bar-chart-3"></i>
+                    </div>
+                    <h3 class="card-title">Win Rate</h3>
+                    <p class="card-description">Percentage of successful task completions or correct responses, used to measure overall system effectiveness.</p>
+                    <div class="card-tags">
+                        <span class="tag">Metrics</span>
+                        <span class="tag">Performance</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #fdcb6e);">
+                        <i data-lucide="deployment"></i>
+                    </div>
+                    <h3 class="card-title">Canary Deployment</h3>
+                    <p class="card-description">Gradual rollout strategy where new model versions are released to a small subset of users before full deployment.</p>
+                    <div class="card-tags">
+                        <span class="tag">Deployment</span>
+                        <span class="tag">Risk Management</span>
+                    </div>
+                </div>
+
+                <!-- Stack Layers -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                        <i data-lucide="layers"></i>
+                    </div>
+                    <h3 class="card-title">CRM Agents</h3>
+                    <p class="card-description">AI systems that automate customer relationship management tasks like lead qualification, follow-ups, and customer support.</p>
+                    <div class="card-tags">
+                        <span class="tag">Business Application</span>
+                        <span class="tag">Automation</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">
+                        <i data-lucide="git-branch"></i>
+                    </div>
+                    <h3 class="card-title">OpenAI Assistants</h3>
+                    <p class="card-description">Pre-built AI agents from OpenAI that can be customized with specific instructions, tools, and knowledge bases.</p>
+                    <div class="card-tags">
+                        <span class="tag">Platform</span>
+                        <span class="tag">Agent Framework</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #45b7d1, #96c93d);">
+                        <i data-lucide="brain"></i>
+                    </div>
+                    <h3 class="card-title">GPT-4o</h3>
+                    <p class="card-description">OpenAI's multimodal flagship model that processes text, images, and audio with enhanced speed and efficiency.</p>
+                    <div class="card-tags">
+                        <span class="tag">LLM</span>
+                        <span class="tag">Multimodal</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f9ca24, #f0932b);">
+                        <i data-lucide="search"></i>
+                    </div>
+                    <h3 class="card-title">text-embedding-3</h3>
+                    <p class="card-description">OpenAI's advanced text embedding model that converts text into high-dimensional vectors for semantic search and similarity tasks.</p>
+                    <div class="card-tags">
+                        <span class="tag">Embeddings</span>
+                        <span class="tag">Vector Search</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i data-lucide="server"></i>
+                    </div>
+                    <h3 class="card-title">Vertex AI</h3>
+                    <p class="card-description">Google Cloud's unified ML platform for building, deploying, and scaling machine learning models and AI applications.</p>
+                    <div class="card-tags">
+                        <span class="tag">Cloud Platform</span>
+                        <span class="tag">MLOps</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="eye"></i>
+                    </div>
+                    <h3 class="card-title">Langfuse</h3>
+                    <p class="card-description">Open-source observability platform for LLM applications, providing tracing, monitoring, and analytics for AI systems.</p>
+                    <div class="card-tags">
+                        <span class="tag">Observability</span>
+                        <span class="tag">Monitoring</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <h3 class="card-title">pgvector</h3>
+                    <p class="card-description">PostgreSQL extension that enables vector similarity search, allowing traditional databases to handle embedding-based queries.</p>
+                    <div class="card-tags">
+                        <span class="tag">Vector Database</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <!-- Architecture Patterns -->
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #fdcb6e);">
+                        <i data-lucide="route"></i>
+                    </div>
+                    <h3 class="card-title">LangGraph</h3>
+                    <p class="card-description">Framework for building stateful, multi-actor applications with LLMs, enabling complex agent workflows and state management.</p>
+                    <div class="card-tags">
+                        <span class="tag">Agent Framework</span>
+                        <span class="tag">State Management</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #81ecec, #74b9ff);">
+                        <i data-lucide="help-circle"></i>
+                    </div>
+                    <h3 class="card-title">RAGAS (RAG Assessment)</h3>
+                    <p class="card-description">Framework for evaluating Retrieval-Augmented Generation systems, measuring faithfulness, answer relevance, and context precision.</p>
+                    <div class="card-tags">
+                        <span class="tag">Evaluation</span>
+                        <span class="tag">RAG Metrics</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #45b7d1, #96c93d);">
+                        <i data-lucide="file-text"></i>
+                    </div>
+                    <h3 class="card-title">CPQ (Configure, Price, Quote)</h3>
+                    <p class="card-description">Business process for configuring products, calculating prices, and generating quotes, often automated with AI assistance.</p>
+                    <div class="card-tags">
+                        <span class="tag">Business Process</span>
+                        <span class="tag">Sales Automation</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f9ca24, #f0932b);">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <h3 class="card-title">Dunning Policies</h3>
+                    <p class="card-description">Automated processes for managing overdue payments, including reminder sequences and escalation procedures.</p>
+                    <div class="card-tags">
+                        <span class="tag">Finance</span>
+                        <span class="tag">Collections</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i data-lucide="user-check"></i>
+                    </div>
+                    <h3 class="card-title">KYC/KYB (Know Your Customer/Business)</h3>
+                    <p class="card-description">Compliance processes for verifying customer and business identities to prevent fraud and meet regulatory requirements.</p>
+                    <div class="card-tags">
+                        <span class="tag">Compliance</span>
+                        <span class="tag">Identity Verification</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="headphones"></i>
+                    </div>
+                    <h3 class="card-title">ASR (Automatic Speech Recognition)</h3>
+                    <p class="card-description">Technology that converts spoken language into written text, enabling voice-based AI interactions.</p>
+                    <div class="card-tags">
+                        <span class="tag">Speech Processing</span>
+                        <span class="tag">Voice AI</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="phone"></i>
+                    </div>
+                    <h3 class="card-title">IVR (Interactive Voice Response)</h3>
+                    <p class="card-description">Automated phone system that interacts with callers through voice and DTMF tones to route calls and provide information.</p>
+                    <div class="card-tags">
+                        <span class="tag">Telephony</span>
+                        <span class="tag">Customer Service</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #fdcb6e);">
+                        <i data-lucide="file-check"></i>
+                    </div>
+                    <h3 class="card-title">IDP (Intelligent Document Processing)</h3>
+                    <p class="card-description">AI-powered extraction and processing of information from documents, combining OCR, NLP, and computer vision.</p>
+                    <div class="card-tags">
+                        <span class="tag">Document AI</span>
+                        <span class="tag">OCR</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #81ecec, #74b9ff);">
+                        <i data-lucide="receipt"></i>
+                    </div>
+                    <h3 class="card-title">AP (Accounts Payable)</h3>
+                    <p class="card-description">Business process of managing and paying supplier invoices and expenses, often automated with AI for efficiency.</p>
+                    <div class="card-tags">
+                        <span class="tag">Finance</span>
+                        <span class="tag">Invoice Processing</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                        <i data-lucide="camera"></i>
+                    </div>
+                    <h3 class="card-title">ViT (Vision Transformer)</h3>
+                    <p class="card-description">Neural network architecture that applies transformer models to computer vision tasks, processing images as sequences of patches.</p>
+                    <div class="card-tags">
+                        <span class="tag">Computer Vision</span>
+                        <span class="tag">Deep Learning</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff7675, #d63031);">
+                        <i data-lucide="trending-down"></i>
+                    </div>
+                    <h3 class="card-title">Churn Prediction</h3>
+                    <p class="card-description">Using machine learning to identify customers likely to stop using a service, enabling proactive retention efforts.</p>
+                    <div class="card-tags">
+                        <span class="tag">Predictive Analytics</span>
+                        <span class="tag">Customer Retention</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #74b9ff, #0984e3);">
+                        <i data-lucide="folder-tree"></i>
+                    </div>
+                    <h3 class="card-title">BM25 (Best Matching 25)</h3>
+                    <p class="card-description">Text scoring algorithm that ranks documents based on term frequency and inverse document frequency, commonly used in search engines.</p>
+                    <div class="card-tags">
+                        <span class="tag">Information Retrieval</span>
+                        <span class="tag">Search</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i data-lucide="bar-chart-3"></i>
+                    </div>
+                    <h3 class="card-title">Prophet</h3>
+                    <p class="card-description">Open-source forecasting library developed by Facebook for time series prediction with automatic trend, seasonality, and holiday detection.</p>
+                    <div class="card-tags">
+                        <span class="tag">Time Series</span>
+                        <span class="tag">Forecasting</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #a29bfe, #6c5ce7);">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <h3 class="card-title">Buddy Matching</h3>
+                    <p class="card-description">AI system that pairs new employees with experienced colleagues for mentorship and onboarding support.</p>
+                    <div class="card-tags">
+                        <span class="tag">HR</span>
+                        <span class="tag">Onboarding</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e17055, #d63031);">
+                        <i data-lucide="shield-alert"></i>
+                    </div>
+                    <h3 class="card-title">Isolation Forest</h3>
+                    <p class="card-description">Unsupervised anomaly detection algorithm that identifies outliers by isolating them in random forests.</p>
+                    <div class="card-tags">
+                        <span class="tag">Anomaly Detection</span>
+                        <span class="tag">Unsupervised Learning</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                        <i data-lucide="shopping-cart"></i>
+                    </div>
+                    <h3 class="card-title">Collaborative Filtering</h3>
+                    <p class="card-description">Recommendation algorithm that predicts user preferences based on similar users' behavior and preferences.</p>
+                    <div class="card-tags">
+                        <span class="tag">Recommendation Systems</span>
+                        <span class="tag">Personalization</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00b894, #55a3ff);">
+                        <i data-lucide="truck"></i>
+                    </div>
+                    <h3 class="card-title">Lead Times</h3>
+                    <p class="card-description">Time required from order placement to delivery, critical for supply chain planning and inventory management.</p>
+                    <div class="card-tags">
+                        <span class="tag">Supply Chain</span>
+                        <span class="tag">Operations</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i data-lucide="scale"></i>
+                    </div>
+                    <h3 class="card-title">Case Law</h3>
+                    <p class="card-description">Body of judicial decisions and legal precedents that guide future court rulings and legal interpretations.</p>
+                    <div class="card-tags">
+                        <span class="tag">Legal</span>
+                        <span class="tag">Precedent</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00cec9, #55efc4);">
+                        <i data-lucide="activity"></i>
+                    </div>
+                    <h3 class="card-title">Clinical Guidelines</h3>
+                    <p class="card-description">Evidence-based recommendations for medical practice, developed by medical experts and professional organizations.</p>
+                    <div class="card-tags">
+                        <span class="tag">Healthcare</span>
+                        <span class="tag">Evidence-Based</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: var(--darker-bg); padding: 40px 0; text-align: center; border-top: 1px solid var(--border-color);">
+        <div class="container">
+            <p style="color: var(--text-secondary); font-size: 1rem; margin: 0;">
+                Prepared by <a href="https://www.linkedin.com/in/pusulurisrinivasa/" target="_blank" style="color: var(--text-primary); font-weight: 600; text-decoration: none; transition: color 0.3s ease;">Srini Pusuluri</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Particle animation
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 20 + 's';
+                    particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                    particles.appendChild(particle);
+                }, i * 200);
+            }
+        }
+
+        // Scroll animations
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            const nav = document.getElementById('nav');
+
+            elements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight * 0.8;
+
+                if (isVisible) {
+                    element.classList.add('animate');
+                }
+            });
+
+            // Nav scroll effect
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        }
+
+        // Search functionality
+        function handleSearch() {
+            const searchInput = document.querySelector('.search-input');
+            const cards = document.querySelectorAll('.card');
+
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+
+                cards.forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    const shouldShow = text.includes(query);
+
+                    card.style.display = shouldShow ? 'block' : 'none';
+                });
+            });
+        }
+
+        // Smooth scrolling for nav links
+        function handleNavLinks() {
+            const navLinks = document.querySelectorAll('.nav-links a');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Mobile menu toggle
+        function handleMobileMenu() {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            toggle.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            handleSearch();
+            handleNavLinks();
+            handleMobileMenu();
+
+            window.addEventListener('scroll', handleScrollAnimations);
+
+            // Initial scroll check
+            handleScrollAnimations();
+        });
+
+        // Add some CSS for mobile menu
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                .nav-links {
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: rgba(26, 26, 46, 0.98);
+                    flex-direction: column;
+                    padding: 20px;
+                    gap: 15px;
+                    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+
