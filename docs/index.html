@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Advanced RAG Chatbot - Web Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #f5576c;
+        }
+
+        .tab-button i {
+            margin-right: 8px;
+        }
+
+        .tab-content {
+            padding: 30px;
+            background: white;
+            min-height: 600px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .feature-card p {
+            opacity: 0.9;
+        }
+
+        .technique-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .interview-card {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(67, 233, 123, 0.3);
+        }
+
+        .reference-card {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            box-shadow: 0 4px 15px rgba(250, 112, 154, 0.3);
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(168, 237, 234, 0.3);
+        }
+
+        .logo {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            color: #333;
+            margin: 30px 0 20px 0;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        .subsection-title {
+            color: #555;
+            margin: 20px 0 15px 0;
+            font-size: 1.5em;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .resource-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .resource-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .resource-item h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .resource-item p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .tab-buttons {
+                flex-wrap: wrap;
+            }
+
+            .tab-button {
+                min-width: 120px;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🚀 🤖</div>
+            <h1>Advanced RAG Chatbot</h1>
+            <p>Master Retrieval-Augmented Generation with Local Llama Models</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="showTab('overview')">
+                    <i class="fas fa-home"></i> Overview
+                </button>
+                <button class="tab-button" onclick="showTab('rag-fundamentals')">
+                    <i class="fas fa-brain"></i> RAG Basics
+                </button>
+                <button class="tab-button" onclick="showTab('advanced-techniques')">
+                    <i class="fas fa-rocket"></i> Advanced RAG
+                </button>
+                <button class="tab-button" onclick="showTab('code-samples')">
+                    <i class="fas fa-code"></i> Code Samples
+                </button>
+                <button class="tab-button" onclick="showTab('interview-questions')">
+                    <i class="fas fa-user-graduate"></i> Interview Q&A
+                </button>
+                <button class="tab-button" onclick="showTab('resources')">
+                    <i class="fas fa-book"></i> Resources
+                </button>
+            </div>
+
+            <div class="tab-content">
+                <!-- Overview Tab -->
+                <div id="overview" class="tab-pane active">
+                    <h2 class="section-title">Welcome to Advanced RAG</h2>
+
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h3><i class="fas fa-robot"></i> Local AI Models</h3>
+                            <p>Use Ollama to run powerful Llama models locally. No API keys, no cloud costs, complete privacy.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3><i class="fas fa-file-alt"></i> Document Processing</h3>
+                            <p>Extract content from PDFs, HTML, images, and web pages. Multiple extraction tools for different document types.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3><i class="fas fa-search"></i> Smart Retrieval</h3>
+                            <p>Semantic search using vector embeddings. Find relevant information based on meaning, not just keywords.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3><i class="fas fa-graduation-cap"></i> Learn & Experiment</h3>
+                            <p>Explore cutting-edge RAG techniques, understand the internals, and master advanced implementations.</p>
+                        </div>
+                    </div>
+
+                    <div class="highlight">
+                        <h3><i class="fas fa-lightbulb"></i> What is RAG?</h3>
+                        <p><strong>Retrieval-Augmented Generation (RAG)</strong> combines the best of retrieval-based and generative AI. It retrieves relevant documents from a knowledge base and uses them as context for LLM generation, resulting in more accurate, factual, and up-to-date responses.</p>
+                    </div>
+
+                    <div class="metric-card">
+                        <h3>RAG Pipeline Overview</h3>
+                        <p>📄 Document Ingestion → 🔍 Chunking & Embedding → 💾 Vector Storage → ❓ Query Processing → 🎯 Retrieval → 🤖 Generation → 📝 Answer</p>
+                    </div>
+                </div>
+
+                <!-- RAG Fundamentals Tab -->
+                <div id="rag-fundamentals" class="tab-pane">
+                    <h2 class="section-title">RAG Fundamentals</h2>
+
+                    <div class="technique-card">
+                        <h3>🔄 The RAG Pipeline</h3>
+                        <p><strong>Retrieval-Augmented Generation</strong> combines retrieval from external knowledge sources with generative AI. It retrieves relevant documents from a knowledge base and uses them as context for LLM generation, reducing hallucinations and improving factual accuracy.</p>
+                    </div>
+
+                    <h3 class="subsection-title">Core Components</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h3>📚 Knowledge Base</h3>
+                            <p>Vectorized documents stored in databases like ChromaDB or FAISS</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>🔍 Retriever</h3>
+                            <p>Semantic search using dense embeddings to find relevant chunks</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>🤖 Generator</h3>
+                            <p>LLM that synthesizes answers using retrieved context</p>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Text Chunking Strategies</h3>
+                    <div class="technique-card">
+                        <h4>Fixed-Size Chunking</h4>
+                        <p>Simple approach: divide text into equal-sized chunks</p>
+                        <strong>Pros:</strong> Easy to implement<br>
+                        <strong>Cons:</strong> May split sentences/paragraphs
+                    </div>
+
+                    <div class="technique-card">
+                        <h4>Recursive Chunking</h4>
+                        <p>Smart splitting: respects document structure (paragraphs → sentences → words)</p>
+                        <strong>Pros:</strong> Preserves semantic units<br>
+                        <strong>Cons:</strong> More complex
+                    </div>
+
+                    <h3 class="subsection-title">Vector Embeddings</h3>
+                    <div class="technique-card">
+                        <p><strong>Embeddings</strong> convert text into high-dimensional vectors that capture semantic meaning.</p>
+                        <p><strong>Cosine Similarity Formula:</strong> similarity = (A • B) / (|A| × |B|)</p>
+                        <p><strong>Popular Models:</strong> all-MiniLM-L6-v2, all-mpnet-base-v2, text-embedding-ada-002</p>
+                    </div>
+                </div>
+
+                <!-- Advanced Techniques Tab -->
+                <div id="advanced-techniques" class="tab-pane">
+                    <h2 class="section-title">Advanced RAG Techniques</h2>
+
+                    <div class="technique-card">
+                        <h3>🎯 Multi-Query Retrieval</h3>
+                        <p>Generate multiple query variations to retrieve diverse relevant documents. Improves recall by capturing different aspects of the query.</p>
+                    </div>
+
+                    <div class="technique-card">
+                        <h3>🔄 RAG Fusion</h3>
+                        <p>Combine results from multiple retrieval strategies using Reciprocal Rank Fusion (RRF). RRF Score = Σ(1/(k + r)) where k=60, r=rank.</p>
+                    </div>
+
+                    <div class="technique-card">
+                        <h3>🎭 HyDE (Hypothetical Document Embeddings)</h3>
+                        <p>Generate hypothetical documents that would answer the query, then use their embeddings for retrieval. Bridges semantic gaps for abstract queries.</p>
+                    </div>
+
+                    <div class="technique-card">
+                        <h3>🔍 Self-RAG</h3>
+                        <p>The model critiques its own retrieval and generation process. Reduces hallucinations by self-verification and provides confidence scores.</p>
+                    </div>
+
+                    <div class="technique-card">
+                        <h3>🔧 Query Expansion</h3>
+                        <p>Expand the original query with related terms, synonyms, and context. Improves recall by handling vocabulary mismatch.</p>
+                    </div>
+
+                    <h3 class="subsection-title">System Architectures</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h3>🕸️ Graph-based RAG</h3>
+                            <p>Use knowledge graphs to enhance retrieval and reasoning</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>📜 Long-context RAG</h3>
+                            <p>Handle very long documents using advanced context management</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>🎨 Multi-modal RAG</h3>
+                            <p>Process text, images, audio, and video modalities</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code Samples Tab -->
+                <div id="code-samples" class="tab-pane">
+                    <h2 class="section-title">Code Samples</h2>
+
+                    <h3 class="subsection-title">Basic RAG Implementation</h3>
+                    <div class="code-block">
+# Install required packages
+pip install langchain chromadb sentence-transformers ollama
+
+# Basic RAG setup
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import SentenceTransformerEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.llms import Ollama
+from langchain.chains import RetrievalQA
+
+# Initialize components
+embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+vectorstore = Chroma(embedding_function=embeddings)
+llm = Ollama(model="llama2")
+
+# Create RAG chain
+qa_chain = RetrievalQA.from_chain_type(
+    llm=llm,
+    chain_type="stuff",
+    retriever=vectorstore.as_retriever()
+)
+                    </div>
+
+                    <h3 class="subsection-title">Document Loading & Processing</h3>
+                    <div class="code-block">
+from langchain.document_loaders import PyPDFLoader, WebBaseLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+# Load documents
+pdf_loader = PyPDFLoader("document.pdf")
+web_loader = WebBaseLoader("https://example.com")
+
+documents = pdf_loader.load() + web_loader.load()
+
+# Split documents
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=200
+)
+chunks = text_splitter.split_documents(documents)
+                    </div>
+
+                    <h3 class="subsection-title">Multi-Query Retrieval</h3>
+                    <div class="code-block">
+def multi_query_retrieval(query, llm, retriever, num_queries=3):
+    # Generate multiple queries
+    prompt = f"Generate {num_queries} different versions of this query: {query}"
+    query_variations = llm.generate(prompt).split("\\n")
+
+    all_docs = []
+    for q in query_variations:
+        docs = retriever.similarity_search(q, k=5)
+        all_docs.extend(docs)
+
+    # Remove duplicates and rank
+    unique_docs = list(set(all_docs))
+    return unique_docs[:10]
+                    </div>
+
+                    <h3 class="subsection-title">HyDE Implementation</h3>
+                    <div class="code-block">
+def hyde_retrieval(query, llm, retriever):
+    # Generate hypothetical document
+    prompt = f"Write a detailed passage that would answer this query: {query}"
+    hypothetical_doc = llm.generate(prompt)
+
+    # Embed hypothetical document
+    hypo_embedding = embedder.encode(hypothetical_doc)
+
+    # Find similar real documents
+    similar_docs = retriever.similarity_search_by_vector(hypo_embedding, k=5)
+
+    return similar_docs
+                    </div>
+                </div>
+
+                <!-- Interview Questions Tab -->
+                <div id="interview-questions" class="tab-pane">
+                    <h2 class="section-title">100 Interview Questions & Answers</h2>
+
+                    <div class="highlight">
+                        <h4>📊 Question Categories:</h4>
+                        <p>RAG Fundamentals (1-20) • Advanced RAG (21-35) • Machine Learning (36-50) • Deep Learning (51-60) • Vector Databases (61-70) • System Design (71-80) • MLOps (81-90) • Prompt Engineering & Ethics (91-100)</p>
+                    </div>
+
+                    <!-- RAG Fundamentals (1-20) -->
+                    <h3 class="subsection-title">🧠 RAG Fundamentals (Questions 1-20)</h3>
+
+                    <div class="interview-card">
+                        <h4>1. What is Retrieval-Augmented Generation (RAG)?</h4>
+                        <p><strong>Answer:</strong> RAG combines retrieval from external knowledge sources with generative AI. It retrieves relevant documents from a knowledge base and uses them as context for LLM generation, reducing hallucinations and improving factual accuracy.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>2. How does RAG differ from fine-tuning?</h4>
+                        <p><strong>Key Points:</strong><br>
+                        • Fine-tuning: Updates model weights, expensive, limited by training data<br>
+                        • RAG: External knowledge, no model updates, scalable, always current<br>
+                        • Fine-tuning: Domain adaptation, RAG: Factual knowledge injection</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>3. Explain the RAG pipeline step-by-step</h4>
+                        <p><strong>Steps:</strong><br>
+                        1. Document ingestion & chunking<br>
+                        2. Embedding generation & vector storage<br>
+                        3. Query embedding & similarity search<br>
+                        4. Context assembly & prompt construction<br>
+                        5. LLM generation with retrieved context</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>4. What are the main components of a RAG system?</h4>
+                        <p><strong>Components:</strong><br>
+                        • Document Loader/Processor<br>
+                        • Text Splitter/Chunker<br>
+                        • Embedding Model<br>
+                        • Vector Database<br>
+                        • Retriever<br>
+                        • LLM<br>
+                        • Prompt Template<br>
+                        • Output Parser</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>5. What are vector embeddings and why are they important in RAG?</h4>
+                        <p><strong>Answer:</strong> Vector embeddings are mathematical representations of text in high-dimensional space that capture semantic meaning. They enable efficient similarity search and allow retrieval of relevant documents based on meaning rather than exact keyword matches.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>6. What is cosine similarity and how is it used in RAG?</h4>
+                        <p><strong>Formula:</strong> similarity = (A • B) / (|A| × |B|)<br>
+                        <strong>Usage:</strong> Measures similarity between query and document embeddings. Higher values indicate more similar content. Range: -1 to 1, where 1 means identical vectors.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>7. What are the advantages of RAG over traditional retrieval systems?</h4>
+                        <p><strong>Advantages:</strong><br>
+                        • Combines retrieval precision with generative capabilities<br>
+                        • Reduces hallucinations through grounded responses<br>
+                        • Always up-to-date with latest knowledge<br>
+                        • More interpretable than pure generative models<br>
+                        • Better handling of long-tail queries</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>8. How does chunking affect RAG performance?</h4>
+                        <p><strong>Impact:</strong><br>
+                        • Small chunks: Better precision, may lose context<br>
+                        • Large chunks: Better context, may include irrelevant information<br>
+                        • Overlap: Helps maintain continuity between chunks<br>
+                        • Strategy choice depends on document type and use case</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>9. What are the limitations of RAG systems?</h4>
+                        <p><strong>Limitations:</strong><br>
+                        • Dependent on quality of retrieved documents<br>
+                        • May retrieve irrelevant or outdated information<br>
+                        • Computational overhead of embedding generation<br>
+                        • Requires careful prompt engineering<br>
+                        • Potential for context stuffing issues</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>10. How do you evaluate RAG system performance?</h4>
+                        <p><strong>Metrics:</strong><br>
+                        • Retrieval: Precision@K, Recall@K, MRR, NDCG<br>
+                        • Generation: Faithfulness, Relevance, Coherence<br>
+                        • End-to-end: User satisfaction, Response quality<br>
+                        • Latency and throughput for production systems</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>11. What is the role of the retriever in RAG?</h4>
+                        <p><strong>Role:</strong> The retriever finds the most relevant documents from the knowledge base based on semantic similarity to the user query. It acts as the "memory" component that provides context for generation.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>12. How does RAG handle out-of-domain queries?</h4>
+                        <p><strong>Handling:</strong><br>
+                        • Falls back to base LLM capabilities when no relevant documents found<br>
+                        • Can be configured with confidence thresholds<br>
+                        • May provide disclaimers about limited knowledge<br>
+                        • Better than fine-tuned models for out-of-distribution queries</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>13. What are different types of text splitters used in RAG?</h4>
+                        <p><strong>Types:</strong><br>
+                        • Character-based: Simple, may break words<br>
+                        • Token-based: Respects token boundaries<br>
+                        • Recursive: Splits by separators (paragraphs → sentences → words)<br>
+                        • Semantic: Uses embeddings to find natural breaks<br>
+                        • Document-aware: Respects document structure</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>14. How do you handle different document formats in RAG?</h4>
+                        <p><strong>Approaches:</strong><br>
+                        • PDF: PyMuPDF, PDFMiner for text extraction<br>
+                        • HTML: BeautifulSoup for parsing and cleaning<br>
+                        • Images: Tesseract OCR for text recognition<br>
+                        • Structured data: Custom parsers for databases/APIs<br>
+                        • Multi-modal: Specialized loaders for different formats</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>15. What is the difference between sparse and dense retrieval?</h4>
+                        <p><strong>Sparse Retrieval:</strong> TF-IDF, BM25 - keyword matching, interpretable<br>
+                        <strong>Dense Retrieval:</strong> Embeddings + similarity - semantic matching, better for complex queries<br>
+                        <strong>Hybrid:</strong> Combines both approaches for optimal results</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>16. How does temperature affect RAG outputs?</h4>
+                        <p><strong>Effect:</strong><br>
+                        • Low temperature (0.1-0.3): More focused, deterministic responses<br>
+                        • Medium temperature (0.5-0.8): Balanced creativity and coherence<br>
+                        • High temperature (0.9-1.5): More creative, potentially less accurate<br>
+                        • RAG often uses lower temperatures for factual accuracy</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>17. What are common RAG failure modes?</h4>
+                        <p><strong>Failure Modes:</strong><br>
+                        • Retrieval misses relevant documents<br>
+                        • Retrieved documents contain incorrect information<br>
+                        • Context stuffing exceeds token limits<br>
+                        • Poor document quality or preprocessing<br>
+                        • Embedding model misalignment with task</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>18. How do you optimize RAG for latency?</h4>
+                        <p><strong>Optimizations:</strong><br>
+                        • Pre-compute embeddings for static documents<br>
+                        • Use approximate nearest neighbor search<br>
+                        • Implement caching for frequent queries<br>
+                        • Optimize chunk sizes and retrieval parameters<br>
+                        • Use smaller, faster embedding models when possible</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>19. What is the role of metadata in RAG systems?</h4>
+                        <p><strong>Role:</strong><br>
+                        • Enables filtering and ranking of retrieved documents<br>
+                        • Provides context about document source and recency<br>
+                        • Supports multi-tenant applications<br>
+                        • Improves retrieval precision through structured filtering<br>
+                        • Helps with result explainability and debugging</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>20. How do you handle multilingual content in RAG?</h4>
+                        <p><strong>Approaches:</strong><br>
+                        • Use multilingual embedding models (e.g., LaBSE, multilingual BERT)<br>
+                        • Separate indexes per language<br>
+                        • Cross-lingual retrieval techniques<br>
+                        • Language detection and routing<br>
+                        • Unicode-aware text processing</p>
+                    </div>
+
+                    <!-- Advanced RAG Techniques (21-35) -->
+                    <h3 class="subsection-title">🚀 Advanced RAG Techniques (Questions 21-35)</h3>
+
+                    <div class="interview-card">
+                        <h4>21. Explain Multi-Query Retrieval and its benefits</h4>
+                        <p><strong>Concept:</strong> Generate multiple query variations to retrieve diverse relevant documents.<br>
+                        <strong>Benefits:</strong> Improves recall, captures different query aspects, reduces bias.<br>
+                        <strong>Use Case:</strong> Complex queries with multiple interpretations.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>22. What is HyDE (Hypothetical Document Embeddings)?</h4>
+                        <p><strong>Answer:</strong> HyDE generates hypothetical documents that would answer the query, then uses their embeddings for retrieval. This bridges semantic gaps and works well for abstract queries where exact matches do not exist.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>23. How does RAG Fusion work?</h4>
+                        <p><strong>Process:</strong> Uses Reciprocal Rank Fusion (RRF) to combine results from multiple retrieval strategies.<br>
+                        <strong>Formula:</strong> RRF Score = Σ(1/(k + r)) where k=60, r=rank<br>
+                        <strong>Benefit:</strong> Combines strengths of different retrieval methods.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>24. What is Self-RAG and how does it improve upon basic RAG?</h4>
+                        <p><strong>Concept:</strong> The model critiques its own retrieval and generation process.<br>
+                        <strong>Components:</strong> Retrieval critic, Generation critic, Self-correction.<br>
+                        <strong>Benefits:</strong> Reduces hallucinations, provides confidence scores, improves answer quality.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>25. Explain the concept of query expansion in RAG</h4>
+                        <p><strong>Concept:</strong> Expand the original query with related terms, synonyms, and context.<br>
+                        <strong>Methods:</strong> Synonym expansion, contextual expansion, historical expansion, domain-specific expansion.<br>
+                        <strong>Benefits:</strong> Improves recall by handling vocabulary mismatch.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>26. What is re-ranking in RAG systems?</h4>
+                        <p><strong>Concept:</strong> Improve retrieval results by re-ranking initial candidates with a more sophisticated model.<br>
+                        <strong>Approaches:</strong> Cross-encoders, learning-to-rank, query-dependent scoring.<br>
+                        <strong>Benefits:</strong> Significantly improves precision at the cost of latency.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>27. How does adaptive retrieval work?</h4>
+                        <p><strong>Concept:</strong> Dynamically adjust retrieval strategy based on query characteristics.<br>
+                        <strong>Strategies:</strong> Query complexity detection, domain routing, confidence thresholding.<br>
+                        <strong>Benefits:</strong> Optimizes performance for different query types.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>28. What are the different RAG architectures?</h4>
+                        <p><strong>Types:</strong><br>
+                        • Naive RAG: Simple retrieve-then-generate<br>
+                        • Advanced RAG: Multi-step retrieval, reranking<br>
+                        • Modular RAG: Separate retriever and generator components<br>
+                        • Graph-based RAG: Knowledge graph enhanced retrieval<br>
+                        • Agent-based RAG: Autonomous orchestration</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>29. How do you handle long documents in RAG?</h4>
+                        <p><strong>Techniques:</strong><br>
+                        • Hierarchical chunking (summaries → sections → paragraphs)<br>
+                        • Dynamic context window selection<br>
+                        • Memory mechanisms for conversation history<br>
+                        • Summarization for context compression<br>
+                        • Multi-stage retrieval with progressive refinement</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>30. What is conversational RAG?</h4>
+                        <p><strong>Concept:</strong> RAG systems that maintain conversation context and history.<br>
+                        <strong>Features:</strong> Memory mechanisms, context-aware retrieval, follow-up question handling.<br>
+                        <strong>Benefits:</strong> More natural interactions, better handling of multi-turn conversations.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>31. Explain the concept of retrieval-augmented pre-training</h4>
+                        <p><strong>Concept:</strong> Use retrieval to augment the pre-training process of language models.<br>
+                        <strong>Benefits:</strong> Improves model knowledge and reasoning capabilities.<br>
+                        <strong>Difference from RAG:</strong> Retrieval used during training, not inference.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>32. What are the challenges of scaling RAG to enterprise level?</h4>
+                        <p><strong>Challenges:</strong><br>
+                        • Managing large document collections<br>
+                        • Ensuring data privacy and security<br>
+                        • Handling multi-tenant requirements<br>
+                        • Maintaining performance at scale<br>
+                        • Version control and document lifecycle management</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>33. How do you implement RAG with streaming responses?</h4>
+                        <p><strong>Implementation:</strong><br>
+                        • Token-by-token streaming from LLM<br>
+                        • Parallel retrieval and generation<br>
+                        • Progressive context assembly<br>
+                        • Client-side buffering and display<br>
+                        • Handling of retrieval delays</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>34. What is the role of prompt engineering in RAG?</h4>
+                        <p><strong>Role:</strong><br>
+                        • Guides the LLM to properly use retrieved context<br>
+                        • Prevents hallucinations and ensures faithfulness<br>
+                        • Optimizes response format and structure<br>
+                        • Handles edge cases and uncertainty<br>
+                        • Improves overall system reliability</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>35. How do you handle conflicting information in retrieved documents?</h4>
+                        <p><strong>Approaches:</strong><br>
+                        • Recency-based ranking (prefer newer documents)<br>
+                        • Authority scoring (prefer trusted sources)<br>
+                        • Consensus detection across multiple sources<br>
+                        • Explicit conflict resolution in prompts<br>
+                        • User clarification for ambiguous cases</p>
+                    </div>
+
+                    <!-- Machine Learning Basics (36-50) -->
+                    <h3 class="subsection-title">🤖 Machine Learning Basics (Questions 36-50)</h3>
+
+                    <div class="interview-card">
+                        <h4>36. Explain the bias-variance tradeoff</h4>
+                        <p><strong>Concept:</strong> Balance between model complexity and generalization.<br>
+                        <strong>High Bias:</strong> Underfitting, simple models, poor training performance<br>
+                        <strong>High Variance:</strong> Overfitting, complex models, poor generalization<br>
+                        <strong>Goal:</strong> Find optimal complexity for best generalization to unseen data.</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>37. What is gradient descent and its variants?</h4>
+                        <p><strong>Basic GD:</strong> Updates weights using full dataset, slow but stable<br>
+                        <strong>SGD:</strong> Updates using single examples, faster, noisy convergence<br>
+                        <strong>Mini-batch GD:</strong> Compromise approach, most commonly used<br>
+                        <strong>Adam:</strong> Adaptive learning rates with momentum, widely used in deep learning</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>38. How do you handle imbalanced datasets?</h4>
+                        <p><strong>Techniques:</strong><br>
+                        • Resampling: Oversample minority, undersample majority classes<br>
+                        • Class weights: Penalize misclassification of minority class<br>
+                        • SMOTE: Synthetic generation of minority class samples<br>
+                        • Ensemble methods: Balanced random forest<br>
+                        • Anomaly detection approaches for rare classes</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>39. Explain regularization techniques</h4>
+                        <p><strong>L1 (Lasso):</strong> Feature selection, sparse models, adds |w| to loss<br>
+                        <strong>L2 (Ridge):</strong> Prevents overfitting, shrinks weights, adds w² to loss<br>
+                        <strong>Elastic Net:</strong> Combines L1 and L2 regularization<br>
+                        <strong>Dropout:</strong> Randomly deactivates neurons during training<br>
+                        <strong>Early Stopping:</strong> Stops training when validation loss increases</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>40. What is cross-validation and why is it important?</h4>
+                        <p><strong>Purpose:</strong> Estimate model performance on unseen data<br>
+                        <strong>K-fold CV:</strong> Split data into k subsets, train on k-1, test on 1<br>
+                        <strong>Benefits:</strong> Reduces overfitting to train set, provides confidence intervals<br>
+                        <strong>Types:</strong> Stratified K-fold, Leave-one-out, Time series split</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>41. What are the differences between supervised, unsupervised, and reinforcement learning?</h4>
+                        <p><strong>Supervised:</strong> Labeled data, predict outputs, classification/regression<br>
+                        <strong>Unsupervised:</strong> Unlabeled data, find patterns, clustering/dimensionality reduction<br>
+                        <strong>Reinforcement:</strong> Learn through interaction, maximize rewards, game playing/robotics</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>42. Explain precision, recall, and F1-score</h4>
+                        <p><strong>Precision:</strong> TP/(TP+FP) - Of predicted positives, how many are correct<br>
+                        <strong>Recall:</strong> TP/(TP+FN) - Of actual positives, how many were found<br>
+                        <strong>F1-Score:</strong> 2*(Precision*Recall)/(Precision+Recall) - Harmonic mean of precision and recall<br>
+                        <strong>Use:</strong> Precision for spam detection, recall for medical diagnosis</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>43. What is the curse of dimensionality?</h4>
+                        <p><strong>Problem:</strong> As feature space grows, data becomes sparse, distances become less meaningful<br>
+                        <strong>Effects:</strong> Overfitting, increased computational complexity, degraded performance<br>
+                        <strong>Solutions:</strong> Feature selection, dimensionality reduction (PCA, t-SNE), regularization</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>44. Explain ensemble learning methods</h4>
+                        <p><strong>Bagging:</strong> Bootstrap aggregation, reduces variance (Random Forest)<br>
+                        <strong>Boosting:</strong> Sequential learning, reduces bias (AdaBoost, XGBoost)<br>
+                        <strong>Stacking:</strong> Use predictions as features for meta-learner<br>
+                        <strong>Voting:</strong> Majority vote for classification, averaging for regression</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>45. What are the assumptions of linear regression?</h4>
+                        <p><strong>Assumptions:</strong><br>
+                        • Linearity: Relationship between features and target is linear<br>
+                        • Independence: Observations are independent<br>
+                        • Homoscedasticity: Constant variance of residuals<br>
+                        • Normality: Residuals are normally distributed<br>
+                        • No multicollinearity: Features are not highly correlated</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>46. How do you handle missing data?</h4>
+                        <p><strong>Methods:</strong><br>
+                        • Deletion: Remove rows/columns with missing data<br>
+                        • Mean/Median/Mode imputation: Fill with central tendency<br>
+                        • KNN imputation: Use similar instances to fill missing values<br>
+                        • Model-based imputation: Predict missing values<br>
+                        • Indicator variables: Flag missing values as separate feature</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>47. What is feature engineering?</h4>
+                        <p><strong>Process:</strong> Creating new features or transforming existing ones to improve model performance<br>
+                        <strong>Techniques:</strong> Scaling/normalization, encoding categorical variables, creating interaction features<br>
+                        <strong>Benefits:</strong> Better model performance, domain knowledge incorporation, reduced dimensionality</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>48. Explain A/B testing and its statistical significance</h4>
+                        <p><strong>Concept:</strong> Compare two versions to determine which performs better<br>
+                        <strong>Statistical Significance:</strong> Probability that observed difference is not due to chance<br>
+                        <strong>p-value:</strong> Probability of observing results if null hypothesis is true<br>
+                        <strong>Confidence Interval:</strong> Range where true effect likely lies</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>49. What are the trade-offs between different ML algorithms?</h4>
+                        <p><strong>Decision Trees:</strong> Interpretable, handle mixed data, prone to overfitting<br>
+                        <strong>Neural Networks:</strong> High performance, require lots of data, black box<br>
+                        <strong>SVM:</strong> Effective in high dimensions, memory intensive, kernel choice important<br>
+                        <strong>Linear Models:</strong> Fast, interpretable, assume linearity</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>50. How do you detect and handle outliers?</h4>
+                        <p><strong>Detection Methods:</strong><br>
+                        • Statistical: Z-score, IQR method<br>
+                        • Visualization: Box plots, scatter plots<br>
+                        • ML-based: Isolation Forest, Local Outlier Factor<br>
+                        <strong>Handling:</strong> Remove, transform, treat as separate class, robust models</p>
+                    </div>
+
+                    <!-- Deep Learning & Neural Networks (51-60) -->
+                    <h3 class="subsection-title">🧠 Deep Learning & Neural Networks (Questions 51-60)</h3>
+
+                    <div class="interview-card">
+                        <h4>51. What is backpropagation and how does it work?</h4>
+                        <p><strong>Concept:</strong> Algorithm for training neural networks by computing gradients<br>
+                        <strong>Process:</strong> Forward pass → compute loss → backward pass → update weights<br>
+                        <strong>Chain Rule:</strong> ∂L/∂w = ∂L/∂a * ∂a/∂z * ∂z/∂w<br>
+                        <strong>Vanishing Gradient:</strong> Gradients become very small in deep networks</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>52. Explain different activation functions</h4>
+                        <p><strong>Sigmoid:</strong> (0,1), smooth, vanishing gradients<br>
+                        <strong>Tanh:</strong> (-1,1), zero-centered, still vanishing gradients<br>
+                        <strong>ReLU:</strong> max(0,x), solves vanishing gradients, dying neurons<br>
+                        <strong>Leaky ReLU:</strong> max(αx,x), fixes dying neurons<br>
+                        <strong>Softmax:</strong> Multi-class classification, outputs probabilities</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>53. What is the vanishing gradient problem?</h4>
+                        <p><strong>Problem:</strong> Gradients become exponentially small as they propagate backward in deep networks<br>
+                        <strong>Causes:</strong> Sigmoid/tanh activation functions, deep architectures<br>
+                        <strong>Solutions:</strong> ReLU activation, batch normalization, residual connections, LSTM/GRU for sequences</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>54. Explain convolutional neural networks (CNNs)</h4>
+                        <p><strong>Components:</strong><br>
+                        • Convolutional layers: Extract spatial features with filters<br>
+                        • Pooling layers: Reduce dimensionality, translation invariance<br>
+                        • Fully connected layers: Classification from extracted features<br>
+                        <strong>Advantages:</strong> Parameter sharing, translation invariance, hierarchical feature learning</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>55. What are recurrent neural networks (RNNs)?</h4>
+                        <p><strong>Concept:</strong> Networks with memory for sequential data<br>
+                        <strong>Architecture:</strong> Hidden state carries information across time steps<br>
+                        <strong>Problems:</strong> Vanishing gradients, long-term dependencies<br>
+                        <strong>Solutions:</strong> LSTM (long short-term memory), GRU (gated recurrent unit)</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>56. Explain attention mechanisms</h4>
+                        <p><strong>Concept:</strong> Learn to focus on relevant parts of input<br>
+                        <strong>Self-Attention:</strong> Attend to different positions in same sequence<br>
+                        <strong>Cross-Attention:</strong> Attend to different modality/sequence<br>
+                        <strong>Transformer:</strong> Entirely attention-based architecture<br>
+                        <strong>Benefits:</strong> Parallel processing, long-range dependencies, interpretability</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>57. What is transfer learning?</h4>
+                        <p><strong>Concept:</strong> Use knowledge from one task to improve performance on another<br>
+                        <strong>Approaches:</strong><br>
+                        • Feature extraction: Use pre-trained model as fixed feature extractor<br>
+                        • Fine-tuning: Update some/all layers for new task<br>
+                        • Domain adaptation: Adapt model to new domain with minimal data</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>58. Explain batch normalization</h4>
+                        <p><strong>Concept:</strong> Normalize layer inputs to have zero mean and unit variance<br>
+                        <strong>Benefits:</strong> Faster training, reduces internal covariate shift, allows higher learning rates<br>
+                        <strong>Training vs Inference:</strong> Uses running statistics during inference</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>59. What are autoencoders?</h4>
+                        <p><strong>Concept:</strong> Neural networks that learn efficient data representations<br>
+                        <strong>Architecture:</strong> Encoder compresses input, decoder reconstructs output<br>
+                        <strong>Types:</strong> Undercomplete, sparse, denoising, variational<br>
+                        <strong>Applications:</strong> Dimensionality reduction, anomaly detection, generative modeling</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>60. Explain the transformer architecture</h4>
+                        <p><strong>Components:</strong><br>
+                        • Self-attention mechanism for contextual understanding<br>
+                        • Multi-head attention for different representation subspaces<br>
+                        • Position encoding for sequence order information<br>
+                        • Feed-forward networks for transformation<br>
+                        <strong>Advantages:</strong> Parallel processing, long-range dependencies, scalability</p>
+                    </div>
+
+                    <!-- Vector Databases & Embeddings (61-70) -->
+                    <h3 class="subsection-title">🗄️ Vector Databases & Embeddings (Questions 61-70)</h3>
+
+                    <div class="interview-card">
+                        <h4>61. What are vector databases and why are they important for RAG?</h4>
+                        <p><strong>Concept:</strong> Specialized databases optimized for high-dimensional vector similarity search<br>
+                        <strong>Importance:</strong> Enable efficient retrieval of semantically similar documents<br>
+                        <strong>Features:</strong> ANN algorithms, metadata filtering, horizontal scaling</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>62. Explain Approximate Nearest Neighbor (ANN) search</h4>
+                        <p><strong>Concept:</strong> Find approximate nearest neighbors in high-dimensional space<br>
+                        <strong>Algorithms:</strong> HNSW, IVF, LSH<br>
+                        <strong>Trade-off:</strong> Speed vs accuracy<br>
+                        <strong>Use Case:</strong> Real-time similarity search at scale</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>63. What is HNSW (Hierarchical Navigable Small World)?</h4>
+                        <p><strong>Concept:</strong> Graph-based ANN algorithm with hierarchical layers<br>
+                        <strong>How it works:</strong> Multi-layer graph with decreasing connectivity<br>
+                        <strong>Advantages:</strong> High recall, fast search, good for real-time applications<br>
+                        <strong>Used in:</strong> Pinecone, Weaviate, Qdrant</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>64. Compare ChromaDB, FAISS, and Pinecone</h4>
+                        <p><strong>ChromaDB:</strong> Open-source, Python-native, good for small to medium datasets<br>
+                        <strong>FAISS:</strong> Facebook AI library, optimized for large datasets, in-memory<br>
+                        <strong>Pinecone:</strong> Managed cloud service, serverless scaling, enterprise features</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>65. What are different embedding models and their trade-offs?</h4>
+                        <p><strong>all-MiniLM-L6-v2:</strong> Fast, balanced performance, 384 dimensions<br>
+                        <strong>all-mpnet-base-v2:</strong> Higher quality, 768 dimensions, slower<br>
+                        <strong>text-embedding-ada-002:</strong> OpenAI model, high quality, API costs<br>
+                        <strong>instructor-xl:</strong> Task-specific embeddings, domain adaptation</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>66. How do you choose the right embedding dimension?</h4>
+                        <p><strong>Factors:</strong><br>
+                        • Task complexity: More complex tasks need higher dimensions<br>
+                        • Computational constraints: Higher dimensions = more compute<br>
+                        • Dataset size: Larger datasets can support higher dimensions<br>
+                        • Downstream performance: Balance quality vs efficiency</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>67. What is embedding quantization?</h4>
+                        <p><strong>Concept:</strong> Reduce embedding precision to save memory and computation<br>
+                        <strong>Types:</strong> Scalar quantization, product quantization, binary quantization<br>
+                        <strong>Benefits:</strong> 2-4x memory reduction, faster search<br>
+                        <strong>Trade-off:</strong> Slight accuracy loss</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>68. Explain vector indexing strategies</h4>
+                        <p><strong>Flat Index:</strong> Brute force search, exact but slow<br>
+                        <strong>IVF (Inverted File):</strong> Cluster-based partitioning, faster approximate search<br>
+                        <strong>HNSW:</strong> Graph-based navigation, high performance<br>
+                        <strong>Composite:</strong> Combine multiple strategies for optimal results</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>69. How do you handle dynamic document updates in vector databases?</h4>
+                        <p><strong>Strategies:</strong><br>
+                        • Incremental updates: Add new vectors without full rebuild<br>
+                        • Version control: Maintain document versions and timestamps<br>
+                        • Soft deletes: Mark documents as deleted without physical removal<br>
+                        • Batch updates: Process updates in batches for efficiency</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>70. What are hybrid search approaches?</h4>
+                        <p><strong>Concept:</strong> Combine multiple retrieval strategies for better results<br>
+                        <strong>Methods:</strong> Sparse + dense retrieval, keyword + semantic search<br>
+                        <strong>Benefits:</strong> Combines strengths of different approaches<br>
+                        <strong>Implementation:</strong> Reciprocal rank fusion, linear combination</p>
+                    </div>
+
+                    <!-- System Design & Architecture (71-80) -->
+                    <h3 class="subsection-title">🏗️ System Design & Architecture (Questions 71-80)</h3>
+
+                    <div class="interview-card">
+                        <h4>71. Design a scalable RAG system for millions of documents</h4>
+                        <p><strong>Components:</strong><br>
+                        • Distributed vector database (Pinecone, Weaviate)<br>
+                        • Document preprocessing pipeline<br>
+                        • Load balancing for retrieval requests<br>
+                        • Caching layer (Redis, Memcached)<br>
+                        • Monitoring and alerting system</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>72. How would you implement caching in a RAG system?</h4>
+                        <p><strong>Types:</strong><br>
+                        • Query-result caching: Cache frequent query responses<br>
+                        • Embedding caching: Cache computed embeddings<br>
+                        • Document caching: Cache frequently accessed documents<br>
+                        <strong>Strategies:</strong> LRU eviction, TTL-based expiration, distributed caching</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>73. Explain the concept of multi-tenancy in RAG systems</h4>
+                        <p><strong>Concept:</strong> Single system serving multiple independent users/organizations<br>
+                        <strong>Challenges:</strong> Data isolation, resource allocation, security<br>
+                        <strong>Solutions:</strong> Namespace separation, quota management, access controls<br>
+                        <strong>Benefits:</strong> Cost efficiency, easier maintenance</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>74. How do you ensure data privacy in RAG systems?</h4>
+                        <p><strong>Approaches:</strong><br>
+                        • Local model deployment (Ollama, private cloud)<br>
+                        • Data encryption at rest and in transit<br>
+                        • Access control and authentication<br>
+                        • Data anonymization techniques<br>
+                        • Private vector databases<br>
+                        • Audit logging and compliance monitoring</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>75. Design a real-time RAG system</h4>
+                        <p><strong>Requirements:</strong><br>
+                        • Low latency retrieval (<100ms)<br>
+                        • Streaming LLM responses<br>
+                        • Real-time document updates<br>
+                        • Horizontal scaling<br>
+                        • Fault tolerance and monitoring</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>76. What are the challenges of deploying RAG in production?</h4>
+                        <p><strong>Challenges:</strong><br>
+                        • Cold start problem for new queries<br>
+                        • Managing vector database performance<br>
+                        • Handling model updates and versioning<br>
+                        • Ensuring response quality and safety<br>
+                        • Monitoring and debugging complex pipelines</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>77. How do you implement A/B testing for RAG systems?</h4>
+                        <p><strong>Approach:</strong><br>
+                        • Different retrieval strategies<br>
+                        • Various embedding models<br>
+                        • Alternative prompt templates<br>
+                        • Chunking and preprocessing variations<br>
+                        <strong>Metrics:</strong> Response quality, latency, user satisfaction</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>78. Explain the role of API gateways in RAG architectures</h4>
+                        <p><strong>Role:</strong><br>
+                        • Request routing and load balancing<br>
+                        • Authentication and authorization<br>
+                        • Rate limiting and throttling<br>
+                        • Request/response transformation<br>
+                        • Monitoring and analytics<br>
+                        • Caching and optimization</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>79. How do you handle rate limiting in RAG APIs?</h4>
+                        <p><strong>Strategies:</strong><br>
+                        • Token bucket algorithm<br>
+                        • Leaky bucket algorithm<br>
+                        • Fixed window vs sliding window<br>
+                        • User-based vs API key-based limits<br>
+                        • Graceful degradation for exceeded limits</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>80. Design a RAG system with offline capabilities</h4>
+                        <p><strong>Components:</strong><br>
+                        • Local LLM deployment (Ollama, GPT4All)<br>
+                        • Local vector database (ChromaDB, FAISS)<br>
+                        • Offline document processing<br>
+                        • Local embedding models<br>
+                        • Synchronization mechanisms for online updates</p>
+                    </div>
+
+                    <!-- MLOps & Deployment (81-90) -->
+                    <h3 class="subsection-title">⚙️ MLOps & Deployment (Questions 81-90)</h3>
+
+                    <div class="interview-card">
+                        <h4>81. How do you deploy ML models to production?</h4>
+                        <p><strong>Steps:</strong><br>
+                        1. Model serialization (pickle, ONNX, TensorFlow SavedModel)<br>
+                        2. Containerization (Docker)<br>
+                        3. API development (FastAPI, Flask)<br>
+                        4. Load balancing and scaling<br>
+                        5. Monitoring and logging<br>
+                        6. A/B testing and rollback strategies</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>82. Explain model monitoring and drift detection</h4>
+                        <p><strong>Monitoring:</strong><br>
+                        • Performance metrics (accuracy, latency, throughput)<br>
+                        • Data drift (input distribution changes)<br>
+                        • Concept drift (relationship changes)<br>
+                        • Outlier detection<br>
+                        • Automated alerting and retraining triggers</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>83. What is CI/CD for ML and why is it important?</h4>
+                        <p><strong>CI/CD for ML:</strong><br>
+                        • Automated testing of data pipelines<br>
+                        • Model validation and performance checks<br>
+                        • Automated deployment pipelines<br>
+                        • Continuous retraining workflows<br>
+                        <strong>Benefits:</strong> Faster iteration, reliable deployments, reproducible results</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>84. How do you handle model versioning and rollback?</h4>
+                        <p><strong>Strategies:</strong><br>
+                        • Semantic versioning for models<br>
+                        • Model registry (MLflow, DVC)<br>
+                        • Canary deployments<br>
+                        • A/B testing frameworks<br>
+                        • Automated rollback triggers<br>
+                        • Experiment tracking and lineage</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>85. Explain the concept of model serving</h4>
+                        <p><strong>Concept:</strong> Deploying trained models for inference in production<br>
+                        <strong>Approaches:</strong><br>
+                        • Real-time serving (REST APIs, gRPC)<br>
+                        • Batch serving (periodic predictions)<br>
+                        • Edge serving (on-device inference)<br>
+                        • Streaming serving (real-time data streams)</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>86. What are the challenges of ML model serving at scale?</h4>
+                        <p><strong>Challenges:</strong><br>
+                        • Latency requirements<br>
+                        • Throughput and concurrency<br>
+                        • Memory and compute resource management<br>
+                        • Model loading and unloading<br>
+                        • Cold start problems<br>
+                        • Version consistency</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>87. How do you optimize ML model serving latency?</h4>
+                        <p><strong>Techniques:</strong><br>
+                        • Model quantization and pruning<br>
+                        • TensorRT, ONNX Runtime optimization<br>
+                        • Caching layer for frequent requests<br>
+                        • Batch processing for efficiency<br>
+                        • Edge deployment for reduced latency<br>
+                        • Model distillation for smaller models</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>88. Explain feature stores and their role in ML systems</h4>
+                        <p><strong>Concept:</strong> Centralized repository for features used in ML models<br>
+                        <strong>Benefits:</strong><br>
+                        • Feature reuse across models<br>
+                        • Consistent feature computation<br>
+                        • Feature versioning and lineage<br>
+                        • Reduced training-serving skew<br>
+                        • Improved collaboration</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>89. What is model governance and why is it important?</h4>
+                        <p><strong>Concept:</strong> Framework for managing ML model lifecycle and compliance<br>
+                        <strong>Aspects:</strong><br>
+                        • Model documentation and lineage<br>
+                        • Performance monitoring and validation<br>
+                        • Ethical and bias considerations<br>
+                        • Regulatory compliance<br>
+                        • Risk management and audit trails</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>90. How do you implement automated retraining pipelines?</h4>
+                        <p><strong>Components:</strong><br>
+                        • Data quality monitoring<br>
+                        • Performance degradation detection<br>
+                        • Automated data collection and labeling<br>
+                        • Model training orchestration<br>
+                        • A/B testing and gradual rollout<br>
+                        • Rollback mechanisms</p>
+                    </div>
+
+                    <!-- Prompt Engineering & Ethics (91-100) -->
+                    <h3 class="subsection-title">🎯 Prompt Engineering & Ethics (Questions 91-100)</h3>
+
+                    <div class="interview-card">
+                        <h4>91. What is prompt engineering and why is it important for RAG?</h4>
+                        <p><strong>Concept:</strong> Crafting effective prompts to guide LLM behavior<br>
+                        <strong>Importance for RAG:</strong><br>
+                        • Ensures proper use of retrieved context<br>
+                        • Prevents hallucinations and improves faithfulness<br>
+                        • Optimizes response format and structure<br>
+                        • Handles edge cases and uncertainty</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>92. Explain few-shot and zero-shot prompting</h4>
+                        <p><strong>Few-shot:</strong> Provide examples in the prompt to guide the model<br>
+                        <strong>Zero-shot:</strong> Give task description without examples<br>
+                        <strong>RAG Context:</strong> Few-shot often more effective for complex reasoning<br>
+                        <strong>Benefits:</strong> Better task understanding, improved performance</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>93. What are common prompt engineering techniques?</h4>
+                        <p><strong>Techniques:</strong><br>
+                        • Role assignment (system messages)<br>
+                        • Chain-of-thought prompting<br>
+                        • Self-consistency checking<br>
+                        • Instruction tuning<br>
+                        • Context formatting<br>
+                        • Output format specification</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>94. How do you handle prompt injection attacks?</h4>
+                        <p><strong>Risks:</strong> Malicious users can override system instructions<br>
+                        <strong>Defenses:</strong><br>
+                        • Input sanitization and validation<br>
+                        • Clear system prompt boundaries<br>
+                        • Content filtering and moderation<br>
+                        • Rate limiting and abuse detection<br>
+                        • Sandboxed execution environments</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>95. What are the ethical considerations in RAG systems?</h4>
+                        <p><strong>Considerations:</strong><br>
+                        • Bias amplification from training data<br>
+                        • Privacy concerns with document storage<br>
+                        • Intellectual property and copyright issues<br>
+                        • Misinformation and hallucination risks<br>
+                        • Transparency and explainability requirements<br>
+                        • Fairness and discrimination concerns</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>96. How do you ensure fairness in RAG systems?</h4>
+                        <p><strong>Approaches:</strong><br>
+                        • Diverse data sources and perspectives<br>
+                        • Bias detection and mitigation<br>
+                        • Fairness-aware retrieval algorithms<br>
+                        • Regular audits and monitoring<br>
+                        • Inclusive design and testing<br>
+                        • Stakeholder engagement and feedback</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>97. What are the privacy implications of RAG?</h4>
+                        <p><strong>Implications:</strong><br>
+                        • Document content storage and retention<br>
+                        • User query logging and analysis<br>
+                        • Data leakage through model outputs<br>
+                        • Cross-contamination between users<br>
+                        • Compliance with privacy regulations (GDPR, CCPA)<br>
+                        • Data minimization and purpose limitation</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>98. How do you implement content moderation in RAG systems?</h4>
+                        <p><strong>Strategies:</strong><br>
+                        • Input filtering and sanitization<br>
+                        • Output content checking<br>
+                        • User behavior monitoring<br>
+                        • Automated content classification<br>
+                        • Human-in-the-loop review processes<br>
+                        • Integration with external moderation services</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>99. What is explainability in RAG systems?</h4>
+                        <p><strong>Concept:</strong> Ability to understand and explain system decisions<br>
+                        <strong>Components:</strong><br>
+                        • Retrieval explanation (why these documents?)<br>
+                        • Generation explanation (why this answer?)<br>
+                        • Confidence scores and uncertainty quantification<br>
+                        • Source attribution and provenance<br>
+                        • User-friendly explanations</p>
+                    </div>
+
+                    <div class="interview-card">
+                        <h4>100. How do you balance innovation with responsible AI in RAG development?</h4>
+                        <p><strong>Balance:</strong><br>
+                        • Ethical guidelines and review processes<br>
+                        • Risk assessment frameworks<br>
+                        • Stakeholder engagement<br>
+                        • Transparency and accountability<br>
+                        • Continuous monitoring and improvement<br>
+                        • Regulatory compliance and industry standards</p>
+                    </div>
+
+                    <h3 class="subsection-title">Interview Tips</h3>
+                    <div class="highlight">
+                        <h4>💡 Structure Your Answers:</h4>
+                        <ul>
+                            <li>Start with high-level overview</li>
+                            <li>Explain technical details</li>
+                            <li>Discuss trade-offs and alternatives</li>
+                            <li>End with real-world applications</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Resources Tab -->
+                <div id="resources" class="tab-pane">
+                    <h2 class="section-title">Learning Resources</h2>
+
+                    <h3 class="subsection-title">📚 Academic Papers</h3>
+                    <div class="resource-grid">
+                        <div class="reference-card">
+                            <h4>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</h4>
+                            <p>Lewis et al. (2020)</p>
+                            <a href="https://arxiv.org/abs/2005.11401" target="_blank" class="btn">Read Paper</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>Self-RAG: Learning to Retrieve, Generate, and Critique</h4>
+                            <p>Asai et al. (2023)</p>
+                            <a href="https://arxiv.org/abs/2310.11511" target="_blank" class="btn">Read Paper</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>HyDE: Precise Zero-Shot Dense Retrieval</h4>
+                            <p>Gao et al. (2022)</p>
+                            <a href="https://arxiv.org/abs/2212.10496" target="_blank" class="btn">Read Paper</a>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">🛠️ Implementation Guides</h3>
+                    <div class="resource-grid">
+                        <div class="reference-card">
+                            <h4>LangChain RAG Documentation</h4>
+                            <p>Official LangChain guides for RAG implementation</p>
+                            <a href="https://python.langchain.com/docs/use_cases/question_answering/" target="_blank" class="btn">View Guide</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>LlamaIndex Advanced Retrieval</h4>
+                            <p>Comprehensive retrieval strategies and patterns</p>
+                            <a href="https://docs.llamaindex.ai/en/stable/module_guides/querying/retrieval/" target="_blank" class="btn">View Guide</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>RAGAS Evaluation Framework</h4>
+                            <p>Tools for evaluating RAG system performance</p>
+                            <a href="https://docs.ragas.io/" target="_blank" class="btn">View Framework</a>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">🎓 Books & Courses</h3>
+                    <div class="resource-grid">
+                        <div class="reference-card">
+                            <h4>"Building LLM Applications"</h4>
+                            <p>By Valentina Alto, Maarten Grootendorst</p>
+                            <p>Practical guide to LLM development</p>
+                        </div>
+                        <div class="reference-card">
+                            <h4>"Designing Machine Learning Systems"</h4>
+                            <p>By Chip Huyen</p>
+                            <p>ML system design principles</p>
+                        </div>
+                        <div class="reference-card">
+                            <h4>Fast.ai Practical Deep Learning</h4>
+                            <p>Jeremy Howard & Sylvain Gugger</p>
+                            <p>Hands-on deep learning course</p>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">🌐 Online Communities</h3>
+                    <div class="resource-grid">
+                        <div class="reference-card">
+                            <h4>ArXiv Sanity</h4>
+                            <p>ML research paper aggregator</p>
+                            <a href="https://arxiv-sanity-lite.com/" target="_blank" class="btn">Visit Site</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>Papers with Code</h4>
+                            <p>ML research with implementations</p>
+                            <a href="https://paperswithcode.com/" target="_blank" class="btn">Visit Site</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>Made With ML</h4>
+                            <p>ML project tutorials and guides</p>
+                            <a href="https://madewithml.com/" target="_blank" class="btn">Visit Site</a>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">🛠️ Tools & Frameworks</h3>
+                    <div class="resource-grid">
+                        <div class="reference-card">
+                            <h4>LangChain</h4>
+                            <p>Framework for building LLM applications</p>
+                            <a href="https://www.langchain.com/" target="_blank" class="btn">Learn More</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>LlamaIndex</h4>
+                            <p>Data framework for LLM applications</p>
+                            <a href="https://www.llamaindex.ai/" target="_blank" class="btn">Learn More</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>ChromaDB</h4>
+                            <p>Open-source vector database</p>
+                            <a href="https://www.trychroma.com/" target="_blank" class="btn">Learn More</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>Ollama</h4>
+                            <p>Run LLMs locally</p>
+                            <a href="https://ollama.ai/" target="_blank" class="btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.1); margin-top: 40px; border-radius: 20px 20px 0 0;">
+        <p style="color: white; margin: 0; font-size: 1.1em;">
+            🚀 <strong>Prepared by:</strong>
+            <a href="https://www.linkedin.com/in/pusulurisrinivasa/" target="_blank" style="color: #4facfe; text-decoration: none; font-weight: bold;">
+                https://www.linkedin.com/in/pusulurisrinivasa/
+            </a>
+        </p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tab panes
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => button.classList.remove('active'));
+
+            // Show selected tab pane
+            document.getElementById(tabId).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate feature cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Initially hide feature cards
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
+                <div id="resources" class="tab-pane">
+                    <h2 class="section-title">Learning Resources</h2>
+
+                    <h3 class="subsection-title">📚 Academic Papers</h3>
+                    <div class="resource-grid">
+                        <div class="reference-card">
+                            <h4>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</h4>
+                            <p>Lewis et al. (2020)</p>
+                            <a href="https://arxiv.org/abs/2005.11401" target="_blank" class="btn">Read Paper</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>Self-RAG: Learning to Retrieve, Generate, and Critique</h4>
+                            <p>Asai et al. (2023)</p>
+                            <a href="https://arxiv.org/abs/2310.11511" target="_blank" class="btn">Read Paper</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>HyDE: Precise Zero-Shot Dense Retrieval</h4>
+                            <p>Gao et al. (2022)</p>
+                            <a href="https://arxiv.org/abs/2212.10496" target="_blank" class="btn">Read Paper</a>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">🛠️ Implementation Guides</h3>
+                    <div class="resource-grid">
+                        <div class="reference-card">
+                            <h4>LangChain RAG Documentation</h4>
+                            <p>Official LangChain guides for RAG implementation</p>
+                            <a href="https://python.langchain.com/docs/use_cases/question_answering/" target="_blank" class="btn">View Guide</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>LlamaIndex Advanced Retrieval</h4>
+                            <p>Comprehensive retrieval strategies and patterns</p>
+                            <a href="https://docs.llamaindex.ai/en/stable/module_guides/querying/retrieval/" target="_blank" class="btn">View Guide</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>RAGAS Evaluation Framework</h4>
+                            <p>Tools for evaluating RAG system performance</p>
+                            <a href="https://docs.ragas.io/" target="_blank" class="btn">View Framework</a>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">🎓 Books & Courses</h3>
+                    <div class="resource-grid">
+                        <div class="reference-card">
+                            <h4>"Building LLM Applications"</h4>
+                            <p>By Valentina Alto, Maarten Grootendorst</p>
+                            <p>Practical guide to LLM development</p>
+                        </div>
+                        <div class="reference-card">
+                            <h4>"Designing Machine Learning Systems"</h4>
+                            <p>By Chip Huyen</p>
+                            <p>ML system design principles</p>
+                        </div>
+                        <div class="reference-card">
+                            <h4>Fast.ai Practical Deep Learning</h4>
+                            <p>Jeremy Howard & Sylvain Gugger</p>
+                            <p>Hands-on deep learning course</p>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">🌐 Online Communities</h3>
+                    <div class="resource-grid">
+                        <div class="reference-card">
+                            <h4>ArXiv Sanity</h4>
+                            <p>ML research paper aggregator</p>
+                            <a href="https://arxiv-sanity-lite.com/" target="_blank" class="btn">Visit Site</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>Papers with Code</h4>
+                            <p>ML research with implementations</p>
+                            <a href="https://paperswithcode.com/" target="_blank" class="btn">Visit Site</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>Made With ML</h4>
+                            <p>ML project tutorials and guides</p>
+                            <a href="https://madewithml.com/" target="_blank" class="btn">Visit Site</a>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">🛠️ Tools & Frameworks</h3>
+                    <div class="resource-grid">
+                        <div class="reference-card">
+                            <h4>LangChain</h4>
+                            <p>Framework for building LLM applications</p>
+                            <a href="https://www.langchain.com/" target="_blank" class="btn">Learn More</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>LlamaIndex</h4>
+                            <p>Data framework for LLM applications</p>
+                            <a href="https://www.llamaindex.ai/" target="_blank" class="btn">Learn More</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>ChromaDB</h4>
+                            <p>Open-source vector database</p>
+                            <a href="https://www.trychroma.com/" target="_blank" class="btn">Learn More</a>
+                        </div>
+                        <div class="reference-card">
+                            <h4>Ollama</h4>
+                            <p>Run LLMs locally</p>
+                            <a href="https://ollama.ai/" target="_blank" class="btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tab panes
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => button.classList.remove('active'));
+
+            // Show selected tab pane
+            document.getElementById(tabId).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate feature cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Initially hide feature cards
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
