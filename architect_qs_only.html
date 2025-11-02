@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/ML Interview Questions - AI FOR ALL - Agentic AI Hub</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-bg: #1a1a2e;
+            --darker-bg: #16213e;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            background: var(--primary-gradient);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #a8a8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tab-container {
+            margin-bottom: 40px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .tab-button {
+            background: var(--card-bg);
+            border: none;
+            color: var(--text-secondary);
+            padding: 15px 25px;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .tab-button.active {
+            background: var(--accent-gradient);
+            color: white;
+            border-bottom: 2px solid var(--accent-gradient);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .question-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .category {
+            color: var(--accent-gradient);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .difficulty {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .difficulty.easy {
+            background: var(--success-gradient);
+            color: white;
+        }
+
+        .difficulty.medium {
+            background: var(--warning-gradient);
+            color: white;
+        }
+
+        .difficulty.hard {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .answer-hint {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .answer-container {
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .answer-toggle {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .answer-toggle:hover {
+            transform: translateY(-2px);
+        }
+
+        .answer-content {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent-gradient);
+        }
+
+        .answer-content.show {
+            display: block;
+        }
+
+        .answer-content h4 {
+            color: var(--accent-gradient);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .answer-content p, .answer-content ul, .answer-content code {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .answer-content code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .answer-content ul {
+            padding-left: 20px;
+        }
+
+        .answer-content li {
+            margin-bottom: 5px;
+        }
+
+        .stats {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .stats h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .search-container {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .tab-buttons {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                border-radius: 10px;
+                margin-bottom: 5px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <h1>AI/ML Interview Questions</h1>
+            <p>Comprehensive collection of technical interview questions for AI/ML/LLM roles</p>
+        </div>
+    </section>
+
+    <div class="search-container">
+        <div class="container">
+            <input type="text" class="search-input" placeholder="Search interview questions..." onkeyup="filterQuestions(this.value)">
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <div class="stats">
+                <h3>Interview Questions Overview</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Total Questions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">16</div>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Difficulty Levels</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">LLM-Specific</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="openTab('data-governance')">Data, Integration & Governance</button>
+                    <button class="tab-button" onclick="openTab('model-selection')">Model Approach & Selection</button>
+                    <button class="tab-button" onclick="openTab('architecture')">Systems & Reference Architecture</button>
+                    <button class="tab-button" onclick="openTab('mlops')">MLOps / LLMOps & CI/CD</button>
+                    <button class="tab-button" onclick="openTab('genai-patterns')">GenAI/LLM-Specific Patterns</button>
+                    <button class="tab-button" onclick="openTab('quality-testing')">Quality, Evaluation & Testing</button>
+                    <button class="tab-button" onclick="openTab('reliability')">Reliability, Observability & Incident Response</button>
+                    <button class="tab-button" onclick="openTab('security')">Security, Privacy & Compliance</button>
+                    <button class="tab-button" onclick="openTab('cost-performance')">Cost, Performance & Capacity Planning</button>
+                    <button class="tab-button" onclick="openTab('product-ux')">Product & UX Integration</button>
+                    <button class="tab-button" onclick="openTab('edge-hybrid')">Edge, On-Prem, and Hybrid</button>
+                    <button class="tab-button" onclick="openTab('governance')">Governance, Risk & Ethics</button>
+                    <button class="tab-button" onclick="openTab('team-culture')">Team, Process & Culture</button>
+                    <button class="tab-button" onclick="openTab('case-studies')">Case Studies & Troubleshooting</button>
+                    <button class="tab-button" onclick="openTab('design-challenge')">Whiteboard Design Challenge</button>
+                    <button class="tab-button" onclick="openTab('practical-exercises')">Hands-On/Practical Exercises</button>
+                </div>
+
+                <!-- Data, Integration & Governance Tab -->
+                <div id="data-governance" class="tab-content active">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Data, Integration & Governance</h3>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to mapping source systems and defining feature contracts?</div>
+                        <div class="category">Data Architecture</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss data discovery, schema mapping, feature engineering pipelines, and contract definitions between data producers and consumers.</div>
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Sample Answer:</h4>
+                            <p>My approach involves a systematic data discovery phase where I catalog all source systems using tools like Apache Atlas or Amundsen. I create feature contracts that define:</p>
+                            <ul>
+                                <li>Data ownership and stewardship responsibilities</li>
+                                <li>SLA requirements for data freshness and quality</li>
+                                <li>Schema evolution policies and backward compatibility rules</li>
+                                <li>Data lineage tracking from source to feature serving</li>
+                            </ul>
+                            <p>For schema mapping, I establish canonical data models and use schema registries (like Confluent Schema Registry) to enforce contracts. Feature contracts typically include input/output specifications, data freshness requirements, and SLA guarantees.</p>
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle PII minimization, data lineage, and retention for AI workloads?</div>
+                        <div class="category">Data Privacy</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover data anonymization techniques, lineage tracking tools, and compliance with retention policies for ML training data.</div>
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Sample Answer:</h4>
+                            <p>I implement a defense-in-depth approach:</p>
+                            <ul>
+                                <li><strong>PII Minimization:</strong> Use data classification tools to identify PII, implement pseudonymization/anonymization at ingestion</li>
+                                <li><strong>Data Lineage:</strong> Deploy tools like DataHub, Collibra, or custom ETL lineage tracking to trace data from source to model prediction</li>
+                                <li><strong>Retention:</strong> Implement automated retention policies with time-to-live (TTL) configurations, data lake tiering, and compliance archiving</li>
+                            </ul>
+                            <p>For AI workloads, I ensure model training uses only minimally necessary data, implement differential privacy techniques where applicable, and maintain comprehensive audit trails for all data processing activities.</p>
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Describe a schema evolution or breaking-change incident and how you designed around it.</div>
+                        <div class="category">Data Engineering</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Share experience with backward compatibility, migration strategies, and preventing downstream impacts.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement data quality monitoring and anomaly detection in ML pipelines?</div>
+                        <div class="category">Data Quality</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss statistical tests, drift detection, and automated alerting for data quality issues.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for feature store design and real-time feature serving?</div>
+                        <div class="category">Feature Engineering</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover point-in-time correctness, feature versioning, and low-latency serving architectures.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle data versioning and rollback for ML experiments?</div>
+                        <div class="category">Data Versioning</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss dataset versioning strategies, experiment reproducibility, and data lineage tracking.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to data mesh vs. data lake architectures for AI workloads?</div>
+                        <div class="category">Data Architecture</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Compare decentralized vs. centralized data management approaches for machine learning teams.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement data validation and schema enforcement in streaming pipelines?</div>
+                        <div class="category">Data Streaming</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover schema registries, data contracts, and validation frameworks for real-time data.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling imbalanced datasets in production ML systems?</div>
+                        <div class="category">Data Quality</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss sampling techniques, class weights, and evaluation metrics for imbalanced data.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you design data governance frameworks for AI model development?</div>
+                        <div class="category">Data Governance</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover data stewardship, access controls, and compliance frameworks for AI/ML teams.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to synthetic data generation and validation?</div>
+                        <div class="category">Data Augmentation</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss GANs, diffusion models, and validation techniques for synthetic datasets.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle multi-modal data integration and synchronization?</div>
+                        <div class="category">Data Integration</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover timestamp alignment, data fusion techniques, and cross-modal validation.</div>
+                    </div>
+                </div>
+
+                <!-- Model Approach & Selection Tab -->
+                <div id="model-selection" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Model Approach & Selection</h3>
+
+                    <div class="question-card">
+                        <div class="question">When would you choose classical ML vs. LLMs vs. multi-modal? Give concrete thresholds or heuristics.</div>
+                        <div class="category">Model Selection</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss data size requirements, task complexity, latency constraints, and cost considerations.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Compare fine-tuning vs. LoRA vs. prompt-only vs. RAG for domain adaptation.</div>
+                        <div class="category">Model Adaptation</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Compare computational cost, data requirements, and performance trade-offs for each approach.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you decide between open-weight and proprietary foundation models?</div>
+                        <div class="category">Model Selection</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Consider factors like cost, performance, customization needs, and compliance requirements.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to model ensemble design and weighted predictions?</div>
+                        <div class="category">Model Architecture</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss ensemble methods, confidence scoring, and prediction aggregation strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you evaluate model interpretability vs. performance trade-offs?</div>
+                        <div class="category">Model Evaluation</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover techniques like SHAP, LIME, and when to prioritize explainability over accuracy.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling catastrophic forgetting in continual learning?</div>
+                        <div class="category">Model Training</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss replay methods, regularization techniques, and dynamic architecture approaches.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you approach multi-task learning vs. task-specific models?</div>
+                        <div class="category">Model Architecture</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Compare parameter sharing benefits, task interference, and computational efficiency.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your methodology for hyperparameter optimization at scale?</div>
+                        <div class="category">Model Training</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss Bayesian optimization, grid search, random search, and automated ML approaches.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle model selection bias and evaluation overfitting?</div>
+                        <div class="category">Model Evaluation</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover cross-validation strategies, holdout sets, and preventing test set contamination.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to transfer learning and domain adaptation?</div>
+                        <div class="category">Model Training</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss pre-trained models, layer freezing, and domain-specific fine-tuning strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you design model architectures for real-time inference constraints?</div>
+                        <div class="category">Model Architecture</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover model compression, quantization, and architecture choices for latency requirements.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling long-tail distributions in classification tasks?</div>
+                        <div class="category">Model Training</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss sampling strategies, loss function modifications, and evaluation metrics.</div>
+                    </div>
+                </div>
+
+                <!-- Systems & Reference Architecture Tab -->
+                <div id="architecture" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Systems & Reference Architecture</h3>
+
+                    <div class="question-card">
+                        <div class="question">Design a high-level architecture for an AI service that must hit p95 < 200 ms at 500 RPS.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover load balancing, caching strategies, model optimization, and infrastructure scaling.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Discuss stateless vs. stateful inference, feature stores, vector DB choices, and cache layers.</div>
+                        <div class="category">Architecture Patterns</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Compare trade-offs between stateful and stateless approaches for different use cases.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you partition responsibilities between online inference, batch jobs, and stream processing?</div>
+                        <div class="category">System Architecture</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss when to use each processing paradigm and how they integrate.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to microservices vs. monolith for ML systems?</div>
+                        <div class="category">Architecture Patterns</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover service boundaries, data consistency, and deployment complexity trade-offs.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you design for fault tolerance and graceful degradation in AI services?</div>
+                        <div class="category">System Reliability</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss circuit breakers, fallback mechanisms, and partial service availability.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling model versioning and A/B testing in production?</div>
+                        <div class="category">Deployment Architecture</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover model registry, traffic splitting, and rollback mechanisms.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you design data pipelines for both training and inference workloads?</div>
+                        <div class="category">Data Architecture</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss ETL/ELT patterns, data freshness requirements, and pipeline orchestration.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to API design for AI services and model endpoints?</div>
+                        <div class="category">API Design</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover REST vs. gRPC, request/response formats, and error handling.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle resource allocation and GPU utilization optimization?</div>
+                        <div class="category">Infrastructure</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss multi-tenancy, resource pooling, and workload scheduling strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling data consistency across training and inference?</div>
+                        <div class="category">Data Architecture</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover point-in-time correctness, feature consistency, and data synchronization.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you design for scalability and elasticity in AI platforms?</div>
+                        <div class="category">System Architecture</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss auto-scaling policies, load distribution, and capacity planning.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to monitoring and alerting for AI system health?</div>
+                        <div class="category">Observability</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover metrics, logs, traces, and custom health checks for ML systems.</div>
+                    </div>
+                </div>
+
+                <!-- MLOps / LLMOps & CI/CD Tab -->
+                <div id="mlops" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">MLOps / LLMOps & CI/CD</h3>
+
+                    <div class="question-card">
+                        <div class="question">What does a production-grade model release pipeline look like (data → train → eval → sign → deploy)?</div>
+                        <div class="category">CI/CD Pipeline</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover automated testing, validation, approval workflows, and deployment strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you do canarying/shadowing and automated rollback for models?</div>
+                        <div class="category">Deployment Strategy</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss gradual rollouts, traffic splitting, and rollback triggers based on metrics.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Talk about artifact/version management for prompts, models, datasets, and embeddings.</div>
+                        <div class="category">Version Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover versioning strategies for different types of ML artifacts and dependencies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement automated model retraining and drift detection?</div>
+                        <div class="category">Model Lifecycle</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss trigger conditions, data quality checks, and automated pipeline execution.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to model performance monitoring and alerting?</div>
+                        <div class="category">Model Monitoring</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover key metrics, baseline establishment, and automated alerting thresholds.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle dependency management for ML packages and environments?</div>
+                        <div class="category">Environment Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss containerization, package management, and reproducible environments.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling model bias and fairness in production?</div>
+                        <div class="category">Model Governance</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover bias detection, mitigation strategies, and ongoing monitoring.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement automated testing for ML model changes?</div>
+                        <div class="category">Testing Strategy</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover unit tests, integration tests, and model-specific validation.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to model documentation and knowledge sharing?</div>
+                        <div class="category">Documentation</div>
+                        <div class="difficulty easy">Easy</div>
+                        <div class="answer-hint">Discuss model cards, README files, and documentation automation.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle model deprecation and sunsetting processes?</div>
+                        <div class="category">Model Lifecycle</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover migration strategies, backward compatibility, and stakeholder communication.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling data pipeline failures and recovery?</div>
+                        <div class="category">Data Pipeline</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss error handling, retry mechanisms, and data consistency recovery.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement security scanning in ML CI/CD pipelines?</div>
+                        <div class="category">Security</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover vulnerability scanning, dependency checks, and security gates.</div>
+                    </div>
+                </div>
+
+                <!-- GenAI/LLM-Specific Patterns Tab -->
+                <div id="genai-patterns" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">GenAI/LLM-Specific Patterns</h3>
+
+                    <div class="question-card">
+                        <div class="question">Explain RAG retrieval patterns (hybrid search, reranking, query rewriting) and when each wins.</div>
+                        <div class="category">RAG Architecture</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Compare different retrieval strategies and their effectiveness for various query types.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you manage prompt templates, tools/function-calling, and memory safely?</div>
+                        <div class="category">Prompt Engineering</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss template versioning, function call security, and memory management strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Describe guardrails (input/output filters, policies) and how they integrate at runtime.</div>
+                        <div class="category">Safety & Security</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover content filtering, policy enforcement, and runtime integration approaches.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement few-shot learning and in-context learning effectively?</div>
+                        <div class="category">Prompt Engineering</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss example selection, prompt formatting, and performance optimization.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to handling context window limitations and long documents?</div>
+                        <div class="category">LLM Architecture</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover chunking strategies, summarization, and context management techniques.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement chain-of-thought and self-consistency prompting?</div>
+                        <div class="category">Prompt Engineering</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss reasoning chains, consistency verification, and performance trade-offs.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling multi-modal inputs and outputs?</div>
+                        <div class="category">Multi-modal AI</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover vision-language models, data preprocessing, and cross-modal alignment.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement tool use and function calling in LLM applications?</div>
+                        <div class="category">LLM Integration</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss tool selection, execution flow, and error handling strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to prompt optimization and A/B testing?</div>
+                        <div class="category">Prompt Engineering</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover prompt versioning, performance metrics, and optimization techniques.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle rate limiting and quota management for LLM APIs?</div>
+                        <div class="category">API Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss token limits, request throttling, and cost management strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling LLM hallucinations and fact verification?</div>
+                        <div class="category">LLM Safety</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover retrieval-augmented generation, fact-checking, and confidence scoring.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement conversation memory and context management?</div>
+                        <div class="category">LLM Architecture</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss memory types, context compression, and conversation state management.</div>
+                    </div>
+                </div>
+
+                <!-- Quality, Evaluation & Testing Tab -->
+                <div id="quality-testing" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Quality, Evaluation & Testing</h3>
+
+                    <div class="question-card">
+                        <div class="question">How do you design offline and online evals for generative tasks (accuracy, toxicity, factuality, self-consistency)?</div>
+                        <div class="category">Model Evaluation</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover evaluation metrics, test data creation, and automated evaluation pipelines.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your stance on golden sets vs. synthetic eval data, and how do you fight evaluation overfitting?</div>
+                        <div class="category">Evaluation Strategy</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Compare human-curated vs. synthetic evaluation data and overfitting prevention.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you A/B test LLM systems where outputs are non-deterministic?</div>
+                        <div class="category">A/B Testing</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss statistical significance, variance handling, and user experience metrics.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to measuring and improving model calibration?</div>
+                        <div class="category">Model Quality</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover confidence scoring, calibration metrics, and post-hoc calibration techniques.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement automated quality gates in CI/CD pipelines?</div>
+                        <div class="category">Quality Assurance</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss automated testing, quality thresholds, and pipeline blocking criteria.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling edge cases and adversarial inputs?</div>
+                        <div class="category">Robustness Testing</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover adversarial testing, edge case identification, and robustness improvements.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you measure and optimize for diversity in generated outputs?</div>
+                        <div class="category">Output Quality</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss diversity metrics, sampling strategies, and output variation techniques.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to human-in-the-loop evaluation and feedback integration?</div>
+                        <div class="category">Human Evaluation</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover feedback collection, annotation guidelines, and iterative improvement.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement regression testing for model updates?</div>
+                        <div class="category">Testing Strategy</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss baseline establishment, regression detection, and test automation.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for measuring long-term model performance degradation?</div>
+                        <div class="category">Model Monitoring</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover drift detection, performance tracking, and proactive maintenance.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle evaluation data contamination and bias in test sets?</div>
+                        <div class="category">Evaluation Quality</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss data leakage prevention, bias detection, and test set integrity.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to cross-validation and generalization testing?</div>
+                        <div class="category">Model Validation</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover validation strategies, generalization metrics, and overfitting prevention.</div>
+                    </div>
+                </div>
+
+                <!-- Continue with more tabs... -->
+                <div id="reliability" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Reliability, Observability & Incident Response</h3>
+
+                    <div class="question-card">
+                        <div class="question">What do you log for AI services beyond standard app telemetry? (traces, prompts, model IDs, feature values)</div>
+                        <div class="category">Logging Strategy</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss structured logging, sensitive data handling, and debugging information.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you detect drift and data quality regressions in near-real time?</div>
+                        <div class="category">Monitoring</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover statistical tests, alerting thresholds, and automated drift detection.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Tell me about an AI outage you handled—runbook design and post-mortem learnings.</div>
+                        <div class="category">Incident Response</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Share specific incident details, response procedures, and improvement actions.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement circuit breakers and fallback mechanisms for AI services?</div>
+                        <div class="category">Reliability</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss failure modes, fallback strategies, and graceful degradation.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to chaos engineering for ML systems?</div>
+                        <div class="category">Reliability Testing</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover fault injection, resilience testing, and system behavior under stress.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle model prediction latency spikes and performance degradation?</div>
+                        <div class="category">Performance Monitoring</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss performance profiling, resource monitoring, and optimization strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling GPU/TPU failures and resource constraints?</div>
+                        <div class="category">Infrastructure Reliability</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover hardware failure modes, redundancy strategies, and resource management.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement automated health checks for model endpoints?</div>
+                        <div class="category">Monitoring</div>
+                        <div class="difficulty easy">Easy</div>
+                        <div class="answer-hint">Discuss health check endpoints, response validation, and alerting mechanisms.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to incident communication and stakeholder management?</div>
+                        <div class="category">Incident Response</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover communication channels, escalation procedures, and stakeholder updates.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement automated rollback triggers based on monitoring data?</div>
+                        <div class="category">Auto-Recovery</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss metric thresholds, automated decision making, and rollback procedures.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling data pipeline failures and recovery?</div>
+                        <div class="category">Data Reliability</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover failure detection, retry mechanisms, and data consistency recovery.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you design for high availability in multi-region AI deployments?</div>
+                        <div class="category">System Architecture</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover regional redundancy, data synchronization, and failover strategies.</div>
+                    </div>
+                </div>
+
+                <!-- Security, Privacy & Compliance Tab -->
+                <div id="security" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Security, Privacy & Compliance</h3>
+
+                    <div class="question-card">
+                        <div class="question">How do you enforce tenant isolation and prevent cross-tenant data leakage in RAG?</div>
+                        <div class="category">Multi-tenancy</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover data segregation, access controls, and encryption strategies for multi-tenant systems.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Discuss threat models: prompt injection, data exfiltration, jailbreaks, model inversion, supply-chain risks.</div>
+                        <div class="category">Threat Modeling</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover attack vectors, mitigation strategies, and security controls for each threat type.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you meet SOC2/GDPR/PCI constraints for training and inference pipelines?</div>
+                        <div class="category">Compliance</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss compliance frameworks, audit requirements, and implementation strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to data encryption at rest and in transit for AI workloads?</div>
+                        <div class="category">Data Security</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover encryption standards, key management, and secure data handling practices.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement access controls and RBAC for ML platforms?</div>
+                        <div class="category">Access Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss role-based access control, permission models, and audit logging.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling sensitive data in training datasets?</div>
+                        <div class="category">Data Privacy</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover data anonymization, synthetic data generation, and privacy-preserving techniques.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement model security and prevent model theft?</div>
+                        <div class="category">Model Security</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss model protection, watermarking, and access control strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to vulnerability management in ML infrastructure?</div>
+                        <div class="category">Infrastructure Security</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover dependency scanning, container security, and patch management.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle security incidents and forensic analysis for AI systems?</div>
+                        <div class="category">Incident Response</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss incident investigation, evidence preservation, and security forensics.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for API security and authentication for AI services?</div>
+                        <div class="category">API Security</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover authentication mechanisms, rate limiting, and API gateway security.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement privacy-preserving machine learning techniques?</div>
+                        <div class="category">Privacy Technology</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover federated learning, differential privacy, and homomorphic encryption.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to supply chain security for ML models and dependencies?</div>
+                        <div class="category">Supply Chain Security</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover dependency verification, model provenance, and supply chain attacks.</div>
+                    </div>
+                </div>
+
+                <!-- Continue with remaining tabs... -->
+                <div id="cost-performance" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Cost, Performance & Capacity Planning</h3>
+
+                    <div class="question-card">
+                        <div class="question">How do you control LLM spend? (caching, distillation, smaller models, quantization, batching)</div>
+                        <div class="category">Cost Optimization</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss various cost reduction techniques and their trade-offs with performance.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What are your go-to latency optimizations for token-based models?</div>
+                        <div class="category">Performance Optimization</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover model optimization, batching strategies, and infrastructure tuning.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Share a method for forecasting GPU/CPU capacity under growth and seasonality.</div>
+                        <div class="category">Capacity Planning</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss workload analysis, growth modeling, and resource forecasting techniques.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you optimize model inference for cost efficiency?</div>
+                        <div class="category">Model Optimization</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover quantization, pruning, distillation, and dynamic batching strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to caching strategies for LLM responses?</div>
+                        <div class="category">Performance Optimization</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss semantic caching, response caching, and cache invalidation strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement auto-scaling for AI workloads?</div>
+                        <div class="category">Infrastructure Scaling</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover scaling metrics, thresholds, and scaling policies for ML workloads.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling burst traffic and peak loads?</div>
+                        <div class="category">Capacity Planning</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss load balancing, queue management, and capacity planning for peak traffic.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you optimize data transfer costs in distributed ML systems?</div>
+                        <div class="category">Cost Optimization</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover data locality, compression, and efficient data movement strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to model performance benchmarking and profiling?</div>
+                        <div class="category">Performance Analysis</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss profiling tools, bottleneck identification, and performance optimization.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement cost allocation and chargeback for AI services?</div>
+                        <div class="category">Cost Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss cost tracking, resource tagging, and chargeback mechanisms.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling resource contention in shared ML infrastructure?</div>
+                        <div class="category">Resource Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover resource scheduling, priority queuing, and fair sharing mechanisms.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you optimize for energy efficiency in AI workloads?</div>
+                        <div class="category">Sustainability</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss energy-efficient hardware, workload scheduling, and carbon footprint reduction.</div>
+                    </div>
+                </div>
+
+                <!-- Product & UX Integration Tab -->
+                <div id="product-ux" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Product & UX Integration</h3>
+
+                    <div class="question-card">
+                        <div class="question">How do you design human-in-the-loop review with strong UX and measurable impact?</div>
+                        <div class="category">Human-AI Collaboration</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss review workflows, user interface design, and impact measurement.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Where do you place confidence/uncertainty signals in the UX, and how are they computed?</div>
+                        <div class="category">UX Design</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover confidence scoring, uncertainty quantification, and user interface integration.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Discuss content moderation and escalation paths without blocking legitimate use.</div>
+                        <div class="category">Content Safety</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover moderation strategies, escalation workflows, and false positive reduction.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you design for explainability and transparency in AI-powered features?</div>
+                        <div class="category">UX Design</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss explanation interfaces, transparency mechanisms, and user education.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to A/B testing AI features in production?</div>
+                        <div class="category">Product Experimentation</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover experiment design, statistical analysis, and feature rollout strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle user feedback and iterative improvement for AI products?</div>
+                        <div class="category">Product Development</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss feedback collection, analysis, and product iteration processes.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling personalization vs. privacy trade-offs?</div>
+                        <div class="category">Privacy & Personalization</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover privacy-preserving personalization, consent management, and user control.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you design for accessibility in AI-powered interfaces?</div>
+                        <div class="category">Inclusive Design</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss accessibility standards, inclusive design principles, and AI-specific considerations.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to error handling and graceful degradation in UX?</div>
+                        <div class="category">Error Handling</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover error messages, fallback mechanisms, and user experience recovery.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you measure user engagement and satisfaction with AI features?</div>
+                        <div class="category">Product Metrics</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss engagement metrics, satisfaction surveys, and product success indicators.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling cultural and linguistic diversity in AI products?</div>
+                        <div class="category">Globalization</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover localization, cultural adaptation, and multilingual support strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you design for trust and credibility in AI-powered experiences?</div>
+                        <div class="category">Trust & Safety</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover trust signals, credibility indicators, and transparency mechanisms.</div>
+                    </div>
+                </div>
+
+                <!-- Continue with remaining tabs... -->
+                <div id="edge-hybrid" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Edge, On-Prem, and Hybrid</h3>
+
+                    <div class="question-card">
+                        <div class="question">When do you push models to edge devices vs. serve centrally? Tradeoffs and sync strategies.</div>
+                        <div class="category">Edge Computing</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Compare latency, privacy, cost, and reliability trade-offs between edge and cloud deployment.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you deploy on air-gapped or regulated environments with limited telemetry?</div>
+                        <div class="category">On-Premise Deployment</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss deployment strategies, security constraints, and monitoring limitations.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Quantization and distillation choices for constrained hardware—what's your playbook?</div>
+                        <div class="category">Model Optimization</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover quantization techniques, distillation strategies, and hardware-specific optimizations.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle model updates and versioning in edge deployments?</div>
+                        <div class="category">Edge Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss over-the-air updates, rollback strategies, and version compatibility.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to hybrid cloud-edge architectures for AI workloads?</div>
+                        <div class="category">Hybrid Architecture</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover data synchronization, workload distribution, and consistency management.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you optimize for battery life and resource constraints on mobile devices?</div>
+                        <div class="category">Mobile Optimization</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss power optimization, memory management, and performance tuning for mobile.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling offline functionality in AI applications?</div>
+                        <div class="category">Offline Computing</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover offline inference, data synchronization, and graceful offline behavior.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement security for edge AI deployments?</div>
+                        <div class="category">Edge Security</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss device security, data protection, and secure model updates.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to model compression for deployment constraints?</div>
+                        <div class="category">Model Optimization</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover pruning, quantization, knowledge distillation, and architecture optimization.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle data privacy and compliance in edge deployments?</div>
+                        <div class="category">Privacy & Compliance</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss local data processing, privacy-preserving techniques, and regulatory compliance.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling network connectivity issues in distributed AI systems?</div>
+                        <div class="category">Network Resilience</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover offline operation, data synchronization, and network failure recovery.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement monitoring and debugging for edge AI deployments?</div>
+                        <div class="category">Edge Observability</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss limited telemetry, local logging, and remote debugging strategies.</div>
+                    </div>
+                </div>
+
+                <!-- Continue with remaining tabs... -->
+                <div id="governance" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Governance, Risk & Ethics</h3>
+
+                    <div class="question-card">
+                        <div class="question">What governance artifacts do you maintain (model cards, data cards, DPIAs, risk registers)?</div>
+                        <div class="category">AI Governance</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss documentation standards, risk assessment, and compliance artifacts.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you operationalize responsible AI policies (review boards, release gates, alerts)?</div>
+                        <div class="category">Responsible AI</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover policy implementation, review processes, and automated enforcement.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Discuss bias testing methodology and mitigation plans.</div>
+                        <div class="category">Fairness & Bias</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover bias detection methods, fairness metrics, and mitigation strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement model risk assessments and impact evaluations?</div>
+                        <div class="category">Risk Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss risk identification, impact assessment, and risk mitigation planning.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to ethical review and approval processes for AI projects?</div>
+                        <div class="category">AI Ethics</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover ethical frameworks, review committees, and approval workflows.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle data ethics and consent management in AI projects?</div>
+                        <div class="category">Data Ethics</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss consent mechanisms, data usage transparency, and ethical data practices.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling AI safety and alignment concerns?</div>
+                        <div class="category">AI Safety</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover safety testing, alignment techniques, and safety monitoring.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement transparency and explainability requirements?</div>
+                        <div class="category">Transparency</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss explainability techniques, transparency reporting, and user communication.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to stakeholder engagement and communication for AI initiatives?</div>
+                        <div class="category">Stakeholder Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover stakeholder mapping, communication strategies, and expectation management.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you handle regulatory compliance and audit requirements for AI systems?</div>
+                        <div class="category">Compliance</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss regulatory frameworks, audit preparation, and compliance monitoring.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling AI incidents and ethical violations?</div>
+                        <div class="category">Incident Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover incident response, ethical violation handling, and corrective actions.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement continuous governance and monitoring for AI systems?</div>
+                        <div class="category">Governance</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss ongoing monitoring, governance metrics, and continuous improvement.</div>
+                    </div>
+                </div>
+
+                <!-- Team, Process & Culture Tab -->
+                <div id="team-culture" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Team, Process & Culture</h3>
+
+                    <div class="question-card">
+                        <div class="question">How do you split roles across data, platform, app, and research while avoiding silos?</div>
+                        <div class="category">Team Organization</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss team structure, collaboration models, and cross-functional integration.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Hiring signals for ML/LLM engineers vs. prompt engineers vs. data engineers?</div>
+                        <div class="category">Talent Acquisition</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Cover skill assessment, interview strategies, and role differentiation.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you keep experiments fast without compromising safety or compliance?</div>
+                        <div class="category">Development Process</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss rapid prototyping, safety gates, and compliance integration in development.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to knowledge sharing and documentation in AI teams?</div>
+                        <div class="category">Knowledge Management</div>
+                        <div class="difficulty easy">Easy</div>
+                        <div class="answer-hint">Discuss documentation practices, knowledge bases, and team learning initiatives.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement code review and quality assurance for ML code?</div>
+                        <div class="category">Code Quality</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss review processes, testing standards, and quality metrics for ML code.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for handling technical debt in ML systems?</div>
+                        <div class="category">Technical Debt</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss debt identification, prioritization, and systematic reduction strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you foster innovation while maintaining production stability?</div>
+                        <div class="category">Innovation Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss innovation processes, risk management, and stability maintenance.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to performance management and career development in AI teams?</div>
+                        <div class="category">People Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss performance evaluation, skill development, and career progression.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you implement agile practices in ML project management?</div>
+                        <div class="category">Project Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss sprint planning, iteration management, and delivery practices for ML projects.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your strategy for vendor management and third-party AI service integration?</div>
+                        <div class="category">Vendor Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss vendor evaluation, integration strategies, and risk management.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How do you build and maintain team culture in distributed AI teams?</div>
+                        <div class="category">Team Culture</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss remote work practices, team building, and cultural development.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">What's your approach to change management for AI system updates?</div>
+                        <div class="category">Change Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss stakeholder communication, training, and adoption strategies.</div>
+                    </div>
+                </div>
+
+                <!-- Case Studies & Troubleshooting Tab -->
+                <div id="case-studies" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Case Studies & Troubleshooting</h3>
+
+                    <div class="question-card">
+                        <div class="question">Share a time you replaced an LLM with a smaller model—impact on cost/latency/quality.</div>
+                        <div class="category">Model Optimization</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Share specific case study with metrics, implementation details, and lessons learned.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Post-launch, outputs got less factual. How do you root-cause across retrieval, prompts, and model shifts?</div>
+                        <div class="category">Troubleshooting</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss systematic debugging, component isolation, and root cause analysis.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">A stakeholder wants "GPT-4 everywhere"—how do you negotiate scope and alternatives?</div>
+                        <div class="category">Stakeholder Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss requirement analysis, alternative proposals, and cost-benefit communication.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How did you handle a major model performance regression in production?</div>
+                        <div class="category">Incident Response</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Share incident details, response actions, and prevention measures implemented.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Describe a time when you had to choose between model accuracy and inference speed.</div>
+                        <div class="category">Trade-off Decisions</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss decision criteria, implementation approach, and outcome evaluation.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How did you handle conflicting requirements between product and engineering teams?</div>
+                        <div class="category">Team Collaboration</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss conflict resolution, compromise strategies, and collaborative decision making.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Share an experience with model bias and how you addressed it.</div>
+                        <div class="category">Bias Mitigation</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss bias detection, impact assessment, and mitigation implementation.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How did you handle a data quality crisis that affected model performance?</div>
+                        <div class="category">Data Quality</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Share incident details, root cause analysis, and quality improvement measures.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Describe a successful AI project delivery under tight deadlines.</div>
+                        <div class="category">Project Management</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss planning, execution, risk management, and delivery strategies.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How did you handle scaling challenges when user traffic suddenly increased?</div>
+                        <div class="category">Scaling</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss capacity planning, scaling strategies, and performance optimization.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Share an experience with integrating AI into legacy systems.</div>
+                        <div class="category">System Integration</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Discuss integration challenges, migration strategies, and compatibility issues.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">How did you handle a situation where AI predictions were legally challenged?</div>
+                        <div class="category">Legal & Compliance</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss legal compliance, documentation, and risk mitigation strategies.</div>
+                    </div>
+                </div>
+
+                <!-- Whiteboard Design Challenge Tab -->
+                <div id="design-challenge" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Whiteboard Design Challenge</h3>
+
+                    <div class="question-card">
+                        <div class="question">"Design a secure multi-tenant RAG platform for customer support across 20 products."</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Expect discussion of ingestion pipelines, chunking, vector schema, hybrid search, tool-use, guardrails, evals, cost controls, and observability.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a real-time recommendation system for an e-commerce platform.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover user behavior tracking, feature engineering, model serving, A/B testing, and personalization algorithms.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a fraud detection system for financial transactions.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss real-time processing, feature extraction, anomaly detection, model ensemble, and false positive management.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a content moderation system for social media platform.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover multi-modal content analysis, rule-based and ML approaches, human-in-the-loop, and scaling considerations.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a predictive maintenance system for manufacturing equipment.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss IoT sensor data, time-series analysis, anomaly detection, and integration with maintenance workflows.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a personalized learning platform using AI.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover learner modeling, content recommendation, adaptive testing, and learning analytics.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a healthcare diagnostic assistance system.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss medical data privacy, multi-modal analysis, clinical decision support, and regulatory compliance.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a supply chain optimization system using AI.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover demand forecasting, inventory optimization, route planning, and supplier management.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a legal document analysis and contract review system.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss document understanding, clause extraction, risk assessment, and compliance checking.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a multi-modal search engine for e-commerce.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover text, image, and video search, ranking algorithms, and personalization.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a real-time language translation system.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Discuss neural machine translation, low-latency serving, and quality evaluation.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a voice assistant for smart home devices.</div>
+                        <div class="category">System Design</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Cover speech recognition, natural language understanding, device control, and privacy considerations.</div>
+                    </div>
+                </div>
+
+                <!-- Hands-On/Practical Exercises Tab -->
+                <div id="practical-exercises" class="tab-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 30px; text-align: center;">Hands-On/Practical Exercises</h3>
+
+                    <div class="question-card">
+                        <div class="question">Write a prompt+retrieval pipeline that defends against prompt injection and measures hallucination rate.</div>
+                        <div class="category">Prompt Engineering</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Implement prompt guards, retrieval validation, and hallucination detection metrics.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Given logs of prompts, completions, feedback, and costs, design KPIs and a rollback trigger.</div>
+                        <div class="category">Monitoring & Alerting</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Define relevant metrics, thresholds, and automated decision criteria.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Implement a canary deployment spec (YAML) for a new model with automatic rollback on eval KPIs.</div>
+                        <div class="category">DevOps</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Write deployment configuration with health checks and rollback conditions.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a data validation pipeline that catches schema drift and data quality issues.</div>
+                        <div class="category">Data Engineering</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Implement validation rules, drift detection, and alerting mechanisms.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Write a script to benchmark model inference latency and throughput under different batch sizes.</div>
+                        <div class="category">Performance Testing</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Implement benchmarking code with various batch sizes and performance metrics.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Create a bias detection analysis for a classification model using fairness metrics.</div>
+                        <div class="category">Bias Testing</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Implement statistical tests and fairness metrics for bias detection.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design an A/B test configuration for comparing two different prompting strategies.</div>
+                        <div class="category">Experimentation</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Define experiment parameters, success metrics, and statistical analysis.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Implement a simple RAG system with query rewriting and hybrid search.</div>
+                        <div class="category">Information Retrieval</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Build retrieval pipeline with query enhancement and search ranking.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Write a model evaluation script that computes multiple metrics for generative tasks.</div>
+                        <div class="category">Model Evaluation</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Implement evaluation metrics for text generation quality assessment.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Design a cost optimization analysis for choosing between different model serving options.</div>
+                        <div class="category">Cost Analysis</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Compare costs, performance, and trade-offs between serving alternatives.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Implement a drift detection system for monitoring model performance over time.</div>
+                        <div class="category">Model Monitoring</div>
+                        <div class="difficulty hard">Hard</div>
+                        <div class="answer-hint">Build statistical tests and alerting for model performance drift.</div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question">Create a data quality assessment framework for training data validation.</div>
+                        <div class="category">Data Quality</div>
+                        <div class="difficulty medium">Medium</div>
+                        <div class="answer-hint">Implement data quality checks, anomaly detection, and reporting.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tab functionality
+        function openTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => button.classList.remove('active'));
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Filter function for search
+        function filterQuestions(query) {
+            const questionCards = document.querySelectorAll('.question-card');
+            const lowerQuery = query.toLowerCase();
+
+            questionCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const shouldShow = text.includes(lowerQuery);
+
+                card.style.display = shouldShow ? 'block' : 'none';
+            });
+        }
+
+        // Toggle answer visibility
+        function toggleAnswer(button) {
+            const answerContent = button.nextElementSibling;
+            const isVisible = answerContent.classList.contains('show');
+
+            if (isVisible) {
+                answerContent.classList.remove('show');
+                button.textContent = 'Show Answer';
+            } else {
+                answerContent.classList.add('show');
+                button.textContent = 'Hide Answer';
+            }
+        }
+
+        // Add some CSS for mobile responsiveness
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                .tab-buttons {
+                    flex-direction: column;
+                }
+
+                .tab-button {
+                    border-radius: 10px;
+                    margin-bottom: 5px;
+                }
+
+                .hero h1 {
+                    font-size: 2.5rem;
+                }
+
+                .section-title {
+                    font-size: 2rem;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
++++++++ REPLACE</diff>
+</replace_in_file>
